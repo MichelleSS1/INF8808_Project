@@ -22,10 +22,62 @@ import * as d3Chromatic from 'd3-scale-chromatic'
 
   const margin = { top: 35, right: 200, bottom: 35, left: 200 }
 
-
-  d3.csv('', d3.autoType).then(function (data) {
+  //first viz
+  d3.csv('./data_offensive.csv', d3.autoType).then(function (data) {
     //TODO
+    data = preproc.preprocessOffense(data)
+    console.log(data)
+    setSizing()
+    build()
 
+    /**
+     *   This function handles the graph's sizing.
+     */
+    function setSizing () {
+      bounds = d3.select('.graph').node().getBoundingClientRect()
+
+      svgSize = {
+        width: bounds.width,
+        height: 550
+      }
+
+      graphSize = {
+        width: svgSize.width - margin.right - margin.left,
+        height: svgSize.height - margin.bottom - margin.top
+      }
+
+      helper.setCanvasSize(svgSize.width, svgSize.height)
+    }
+
+    /**
+     *   This function builds the graph.
+     */
+    function build () {
+      viz.updateXScale(xScale, data, graphSize.width, util.range)
+      viz.updateYScale(yScale, neighborhoodNames, graphSize.height)
+
+      viz.drawXAxis(xScale)
+      viz.drawYAxis(yScale, graphSize.width)
+
+      viz.rotateXTicks()
+
+      viz.updateRects(xScale, yScale, colorScale)
+
+      hover.setRectHandler(xScale, yScale, hover.rectSelected, hover.rectUnselected, hover.selectTicks, hover.unselectTicks)
+
+      legend.draw(margin.left / 2, margin.top + 5, graphSize.height - 10, 15, 'url(#gradient)', colorScale)
+    }
+
+    window.addEventListener('resize', () => {
+      setSizing()
+      build()
+    })
+  })
+  //second viz
+  d3.csv('./data_defensive.csv', d3.autoType).then(function (data) {
+    //TODO
+    data = preproc.preprocessDefense(data)
+    console.log(data)
     setSizing()
     build()
 
@@ -64,7 +116,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
       build()
     })
   }
-  
-  //second viz
+
+  //third viz
   )
 })(d3)
