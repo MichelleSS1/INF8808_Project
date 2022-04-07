@@ -52,19 +52,11 @@ import * as d3Chromatic from 'd3-scale-chromatic'
      *   This function builds the graph.
      */
     function build () {
-      viz.updateXScale(xScale, data, graphSize.width, util.range)
-      viz.updateYScale(yScale, neighborhoodNames, graphSize.height)
+      offensiveStatsChart = d3.select('.chart-off-svg')
+      defensiveStatsChart = d3.select('.chart-def-svg')
 
-      viz.drawXAxis(xScale)
-      viz.drawYAxis(yScale, graphSize.width)
-
-      viz.rotateXTicks()
-
-      viz.updateRects(xScale, yScale, colorScale)
-
-      hover.setRectHandler(xScale, yScale, hover.rectSelected, hover.rectUnselected, hover.selectTicks, hover.unselectTicks)
-
-      legend.draw(margin.left / 2, margin.top + 5, graphSize.height - 10, 15, 'url(#gradient)', colorScale)
+      viz.drawOffensiveRadarChart(data, offensiveStatsChart)
+      viz.drawDefensiveRadarChart(data, defensiveStatsChart)
     }
 
     window.addEventListener('resize', () => {
