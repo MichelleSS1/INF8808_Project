@@ -20,7 +20,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
   let svgSize
   let graphSize
 
-  const margin = { top: 35, right: 200, bottom: 35, left: 200 }
+  const margin = { top: 35, right: 35, bottom: 35, left: 35 }
 
   //first viz
   d3.csv('./data_offensive.csv', d3.autoType).then(function (data) {
@@ -37,24 +37,24 @@ import * as d3Chromatic from 'd3-scale-chromatic'
       bounds = d3.select('.graph').node().getBoundingClientRect()
 
       svgSize = {
-        width: bounds.width,
-        height: 550
+        width: 1200,
+        height: 400
       }
 
       graphSize = {
-        width: svgSize.width - margin.right - margin.left,
+        width: (svgSize.width - margin.right - margin.left) / 3,
         height: svgSize.height - margin.bottom - margin.top
       }
 
-      // helper.setCanvasSize(svgSize.width, svgSize.height)
+      helper.setCanvasSize(svgSize.width, svgSize.height)
     }
 
     /**
      *   This function builds the graph.
      */
     function build () {
-      var offensiveStatsChart = d3.select('.chart-off-svg')
-      viz.drawOffensiveRadarChart(data, offensiveStatsChart)
+      var svgElement = d3.select('.chart-off-svg')
+      viz.drawOffensiveRadarCharts(data, svgElement, graphSize.width, graphSize.height)
     }
 
     window.addEventListener('resize', () => {
