@@ -54,7 +54,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
      */
     function build () {
       var svgElement = d3.select('.chart-off-svg')
-      viz.drawOffensiveRadarCharts(data, svgElement, graphSize.width, graphSize.height)
+      viz.drawOffensiveRadarCharts(data, svgElement, graphSize.width, graphSize.height, margin)
     }
 
     window.addEventListener('resize', () => {
