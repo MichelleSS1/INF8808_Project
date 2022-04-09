@@ -1,12 +1,24 @@
 
-export function getScale()
+export function getScale() {
 
-export function getSteps()
+}
 
-export function drawSteps()
+export function getSteps() {
 
-export function drawAxes()
+}
 
-export function drawCircles()
+export function drawSteps() {
 
-export function drawShape()
+}
+
+export function drawAxes() {
+
+}
+
+export function drawCircles() {
+
+}
+
+export function drawShape() {
+    
+}

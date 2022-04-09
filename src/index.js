@@ -46,26 +46,15 @@ import * as d3Chromatic from 'd3-scale-chromatic'
         height: svgSize.height - margin.bottom - margin.top
       }
 
-      helper.setCanvasSize(svgSize.width, svgSize.height)
+      // helper.setCanvasSize(svgSize.width, svgSize.height)
     }
 
     /**
      *   This function builds the graph.
      */
     function build () {
-      viz.updateXScale(xScale, data, graphSize.width, util.range)
-      viz.updateYScale(yScale, neighborhoodNames, graphSize.height)
-
-      viz.drawXAxis(xScale)
-      viz.drawYAxis(yScale, graphSize.width)
-
-      viz.rotateXTicks()
-
-      viz.updateRects(xScale, yScale, colorScale)
-
-      hover.setRectHandler(xScale, yScale, hover.rectSelected, hover.rectUnselected, hover.selectTicks, hover.unselectTicks)
-
-      legend.draw(margin.left / 2, margin.top + 5, graphSize.height - 10, 15, 'url(#gradient)', colorScale)
+      var offensiveStatsChart = d3.select('.chart-off-svg')
+      viz.drawOffensiveRadarChart(data, offensiveStatsChart)
     }
 
     window.addEventListener('resize', () => {
@@ -73,6 +62,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
       build()
     })
   })
+
   //second viz
   d3.csv('./data_defensive.csv', d3.autoType).then(function (data) {
     //TODO
@@ -97,17 +87,14 @@ import * as d3Chromatic from 'd3-scale-chromatic'
         height: svgSize.height - margin.bottom - margin.top
       }
 
-      helper.setCanvasSize(svgSize.width, svgSize.height)
+      // helper.setCanvasSize(svgSize.width, svgSize.height)
     }
 
     /**
      *   This function builds the graph.
      */
     function build () {
-      offensiveStatsChart = d3.select('.chart-off-svg')
-      defensiveStatsChart = d3.select('.chart-def-svg')
-
-      viz.drawOffensiveRadarChart(data, offensiveStatsChart)
+      var defensiveStatsChart = d3.select('.chart-def-svg')
       viz.drawDefensiveRadarChart(data, defensiveStatsChart)
     }
 
