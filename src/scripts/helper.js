@@ -4,8 +4,7 @@
  * @param {number} width The desired width
  * @param {number} height The desired height
  */
- export function setCanvasSize (width, height) {
-    d3.select('svg')
-      .attr('width', width)
+ export function setCanvasSize (selection, width, height) {
+    selection.attr('width', width)
       .attr('height', height)
   }

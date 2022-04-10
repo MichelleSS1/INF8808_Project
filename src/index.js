@@ -20,7 +20,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
   let svgSize
   let graphSize
 
-  const margin = { top: 35, right: 35, bottom: 35, left: 35 }
+  const margin = { top: 65, right: 35, bottom: 35, left: 35 }
 
   //first viz
   d3.csv('./data_offensive.csv', d3.autoType).then(function (data) {
@@ -37,8 +37,8 @@ import * as d3Chromatic from 'd3-scale-chromatic'
       bounds = d3.select('.graph').node().getBoundingClientRect()
 
       svgSize = {
-        width: 1200,
-        height: 400
+        width: 1300,
+        height: 450
       }
 
       graphSize = {
@@ -46,7 +46,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
         height: svgSize.height - margin.bottom - margin.top
       }
 
-      helper.setCanvasSize(svgSize.width, svgSize.height)
+      helper.setCanvasSize(d3.select('.chart-off-svg'), svgSize.width, svgSize.height)
     }
 
     /**
@@ -67,35 +67,34 @@ import * as d3Chromatic from 'd3-scale-chromatic'
   d3.csv('./data_defensive.csv', d3.autoType).then(function (data) {
     //TODO
     data = preproc.preprocessDefense(data)
-    console.log(data)
     setSizing()
     build()
 
     /**
      *   This function handles the graph's sizing.
      */
-    function setSizing () {
+     function setSizing () {
       bounds = d3.select('.graph').node().getBoundingClientRect()
 
       svgSize = {
-        width: bounds.width,
-        height: 550
+        width: 1300,
+        height: 450
       }
 
       graphSize = {
-        width: svgSize.width - margin.right - margin.left,
+        width: (svgSize.width - margin.right - margin.left) / 3,
         height: svgSize.height - margin.bottom - margin.top
       }
 
-      // helper.setCanvasSize(svgSize.width, svgSize.height)
+      helper.setCanvasSize(d3.select('.chart-def-svg'), svgSize.width, svgSize.height)
     }
 
     /**
      *   This function builds the graph.
      */
     function build () {
-      var defensiveStatsChart = d3.select('.chart-def-svg')
-      viz.drawDefensiveRadarChart(data, defensiveStatsChart)
+      var svgElement = d3.select('.chart-def-svg')
+      viz.drawDefensiveRadarChart(data, svgElement, graphSize.width, graphSize.height, margin)
     }
 
     window.addEventListener('resize', () => {

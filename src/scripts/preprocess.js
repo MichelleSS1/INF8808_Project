@@ -27,13 +27,13 @@ export function preprocessDefense(data) {
         new_data.push({
             Team: item['Equipe'],
             Season: item['Saison'],
-            XGA: item['xGA'],
-            Goals_against_per_90: item['GA90'],
-            Save_pourcentage: item['Save%'],
-            Clean_sheets_pourcentage: item['CS%'],
-            Pressure_pourcentage: item['Pressure%'],
-            Takle_pourcentage: item['Tkl%'],
-            Inteception_per_90: item['Int90']
+            xGA: item['xGA'],
+            GA90: item['GA90'],
+            'Save%': item['Save%'],
+            'CS%': item['CS%'],
+            'Pressure%': item['Pressure%'],
+            'Tkl%': item['Tkl%'],
+            'Int90': item['Int90']
         })
     })
 

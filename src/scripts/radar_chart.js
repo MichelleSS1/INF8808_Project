@@ -2,15 +2,20 @@
 const TOTAL_HEADERS_COUNT = 2
 const POINT_RADIUS = 3
 const N_STEPS = 4
-const TITLE_VERTICAL_MARGIN = 15
+const TITLE_VERTICAL_MARGIN = 35
+const TITLE_FONT_SIZE = 17
+const STEP_OPACITY = 0.5
+const STEP_FONT_SIZE = 10
+const LABELS_FONT_SIZE = 13
 const SHAPE_STROKE_WIDTH = 2
 const AXE_STROKE_WIDTH = .5
-const CIRCLE_STROKE_WIDTH = .3
+const TICK_STROKE_WIDTH = .3
 const LABELS_MULTIPLIER_FACTOR = 1.05
 
 // Constants used to move scales.
-const MAX_MULTPLIER_FACTOR = 1.05
-const MIN_MULTIPLIER_FACTOR = 0.8
+const MAX_MULTPLIER_FACTOR = 1.2
+const MIN_MULTIPLIER_FACTOR = 0.9
+const XGA_MULTIPLIER_FACTOR = 1.1
 
 // Possible steps used for viz.
 const STEP_CHOICES = [.1, .2, .5, 1, 2, 5, 10, 20, 50, 100]
@@ -22,13 +27,25 @@ export function setScale(stepChoice, minValue) {
         .range([0, 1])
 }
 
-export function setMins(data, attribute) {
+function getClosestStepToValue(value, isBefore) {
+    for (var i in STEP_CHOICES) {
+        if (value <= STEP_CHOICES[i])
+            return isBefore ? STEP_CHOICES[i - 1] : STEP_CHOICES[i]
+    }
+}
+
+export function getMin(data, attribute) {
     var values = []
     data.forEach(serie => {
         values.push(serie[attribute])
     });
-
-    return MIN_MULTIPLIER_FACTOR * d3.min(values)
+    if (attribute !== 'xGA') {
+        var tempMin = MIN_MULTIPLIER_FACTOR * d3.min(values)
+        return getClosestStepToValue(tempMin, true)
+    } else {
+        var tempMin = XGA_MULTIPLIER_FACTOR * d3.min(values)
+        return - getClosestStepToValue(Math.abs(tempMin), false)
+    }
 }
 
 export function setSteps(data, attribute) {
@@ -37,18 +54,60 @@ export function setSteps(data, attribute) {
         values.push(serie[attribute])
     });
 
-    var minValue = MIN_MULTIPLIER_FACTOR * d3.min(values)
+    if (attribute !== 'xGA') {
+        var tempMin = MIN_MULTIPLIER_FACTOR * d3.min(values)
+        var minValue = getClosestStepToValue(tempMin, true)
+    } else {
+        var tempMin = XGA_MULTIPLIER_FACTOR * d3.min(values)
+        minValue = - getClosestStepToValue(Math.abs(tempMin), false)
+    }
     var maxValue = MAX_MULTPLIER_FACTOR * d3.max(values)
 
     var difference = maxValue - minValue
     for (var i in [...Array(STEP_CHOICES.length).keys()]) {
-        if (difference <= STEP_CHOICES[i] * N_STEPS)
-            return i
+        if (difference < STEP_CHOICES[i] * N_STEPS)
+            return (attribute !== 'xGA') ? i : parseFloat(i) + 1
     }
 }
 
-export function drawSteps() {
+export function drawSteps(stepChoices, mins, scales, element, xCenter, yCenter) {
+    var nCircles = [...Array(N_STEPS - 1).keys()].map(i => i + 1)
+    var labels = Object.keys(mins)
+    var totalAxes = labels.length
+    console.log(mins)
+    var stepContainer = element.append('g')
 
+    nCircles.forEach(function(d) {
+        labels.forEach(function(label, i) {
+            var stepValue = mins[label] + d * STEP_CHOICES[stepChoices[label]].toFixed(2)
+            stepContainer.append('text')
+                .attr('x', xCenter * (1 - scales[label](stepValue) * Math.sin(i * 2 * Math.PI / totalAxes)))
+                .attr('y', yCenter * (1 - scales[label](stepValue) * Math.cos(i * 2 * Math.PI / totalAxes)))
+                .text(stepValue)
+                .attr('text-anchor', 'middle')
+                .attr('alignment-baseline', 'middle')
+                .attr('opacity', STEP_OPACITY)
+                .style('font-size', STEP_FONT_SIZE + 'px')
+                .attr('class', 'steps')
+        })
+    })
+
+    var nodes = []
+    stepContainer.selectAll('.steps')
+        .each(function(d) {
+            nodes.push(d3.select(this).node().getBBox())
+        })
+
+    stepContainer
+        .selectAll('rect')
+        .data(nodes)
+        .enter()
+        .insert('rect', ':first-child')
+        .attr('x', function(d) { return d.x })
+        .attr('y', function(d) { return d.y })
+        .attr('width', function(d) { return d.width })
+        .attr('height', function(d) { return d.height })
+        .attr('fill', 'white')
 }
 
 export function drawPoints(data, element, xCenter, yCenter, scales) {
@@ -100,37 +159,36 @@ export function drawAxesLabel(data, element, xCenter, yCenter) {
         .attr('x', function(_, i) { return xCenter * (1 - LABELS_MULTIPLIER_FACTOR * Math.sin(i * 2 * Math.PI / totalAxes)); })
         .attr('y', function(_, i) { return yCenter * (1 - LABELS_MULTIPLIER_FACTOR * Math.cos(i * 2 * Math.PI / totalAxes)); })
         .attr('text-anchor', 'middle')
+        .style('font-size', LABELS_FONT_SIZE + 'px')
+        .style('font-weight', 'bold')
         .text(function(d) { return d; })
 }
 
-export function drawCircles(stepChoices, mins, scales, element, xCenter, yCenter) {
-    var nCircles = [...Array(N_STEPS).keys()]
-    var radiuses = []
+export function drawTicks(stepChoices, mins, scales, element, xCenter, yCenter) {
+    var nTicks = [...Array(N_STEPS - 1).keys()].map(i => i + 1)
+    var labels = Object.keys(mins)
+    var totalAxes = labels.length
+    console.log(mins)
 
-    var label = Object.keys(mins)[0]
-    var minValue = mins[label]
+    var ticksContainer = element.append('g')
+        .attr('class', 'ticks')
 
-    nCircles.forEach((i) => {
-        var value = minValue + i * STEP_CHOICES[stepChoices[label]]
-        console.log(stepChoices)
-        var radius = yCenter * (1 - scales[label](value))
-        console.log(radius)
-        radiuses.push(radius)
+    nTicks.forEach(function(d) {
+        var strPolygon = ''
+        labels.forEach((label, i) => {
+            var stepValue = mins[label] + d * STEP_CHOICES[stepChoices[label]].toFixed(2)
+            var x = xCenter * (1 - scales[label](stepValue) * Math.sin(i * 2 * Math.PI / totalAxes))
+            var y = yCenter * (1 - scales[label](stepValue) * Math.cos(i * 2 * Math.PI / totalAxes))
+            strPolygon += (x + ',' + y + ' ')
+        })
+
+        ticksContainer.append('polygon')
+            .attr('points', strPolygon)
+            .attr('fill', 'transparent')
+            .attr('stroke-width', TICK_STROKE_WIDTH + 'px')
+            .attr('stroke', 'black') 
+            .attr('stroke-dasharray', '4, 1')
     })
-
-    element.append('g')
-        .attr('class', 'circles')
-        .selectAll('circle')
-        .data(radiuses)
-        .enter()
-        .append('circle')
-        .attr('cx', xCenter)
-        .attr('cy', yCenter)
-        .attr('r', function(d) { return d; })
-        .attr('fill', 'transparent')
-        .attr('stroke-width', CIRCLE_STROKE_WIDTH + 'px')
-        .attr('stroke', 'black')
-        .style('stroke-dasharray', ('4, 2'))
 }
 
 export function drawShape(data, element, xCenter, yCenter, scales) {
@@ -157,7 +215,7 @@ export function drawTitle(data, element, xCenter) {
         .attr('y', -TITLE_VERTICAL_MARGIN)
         .attr('text-anchor', 'middle')
         .style('color', 'black')
-        .style('font-size', '12px')
+        .style('font-size', TITLE_FONT_SIZE + 'px')
 }
 
 export function getStats(data) {
