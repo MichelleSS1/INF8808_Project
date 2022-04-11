@@ -39,18 +39,20 @@ export function drawOffensiveRadarCharts(data, element, width, height, margin) {
 
     // Build each chart separately.
     data.forEach(function(serie, i) {
+        var xTranslation = Math.floor(i / 2) * (width + margin.left + margin.right)
+        var chartContainer = container.append('g')
+            .attr('transform', 'translate(' + xTranslation + ' 0)')
         if (serie.Team === 'Juventus') {
-            var xTranslation = i / 2 * width
-            var chartContainer = container.append('g')
-                .attr('transform', 'translate(' + xTranslation + ' 0)')
-
             radarChart.drawAxes(serie, chartContainer, xCenter, yCenter)
             radarChart.drawAxesLabel(serie, chartContainer, xCenter, yCenter)
             radarChart.drawTicks(steps, mins, scales, chartContainer, xCenter, yCenter)
             radarChart.drawSteps(steps, mins, scales, chartContainer, xCenter, yCenter)
             radarChart.drawTitle(serie, chartContainer, xCenter)
-            radarChart.drawPoints(serie, chartContainer, xCenter, yCenter, scales)
-            radarChart.drawShape(serie, chartContainer, xCenter, yCenter, scales)
+            radarChart.drawPoints(serie, chartContainer, xCenter, yCenter, scales, 'blue')
+            radarChart.drawShape(serie, chartContainer, xCenter, yCenter, scales, 'blue')
+        } else {
+            radarChart.drawPoints(serie, chartContainer, xCenter, yCenter, scales, 'orange')
+            radarChart.drawShape(serie, chartContainer, xCenter, yCenter, scales, 'orange')
         }
     });
 }
@@ -96,18 +98,20 @@ export function drawDefensiveRadarChart(data, element, width, height, margin) {
 
     // Build each chart separately.
     data.forEach(function(serie, i) {
+        var xTranslation = Math.floor(i / 2) * (width + margin.left + margin.right)
+        var chartContainer = container.append('g')
+            .attr('transform', 'translate(' + xTranslation + ' 0)')
         if (serie.Team === 'Juventus') {
-            var xTranslation = i / 2 * width
-            var chartContainer = container.append('g')
-                .attr('transform', 'translate(' + xTranslation + ' 0)')
-
             radarChart.drawAxes(serie, chartContainer, xCenter, yCenter)
             radarChart.drawAxesLabel(serie, chartContainer, xCenter, yCenter)
             radarChart.drawTicks(steps, mins, scales, chartContainer, xCenter, yCenter)
             radarChart.drawSteps(steps, mins, scales, chartContainer, xCenter, yCenter)
             radarChart.drawTitle(serie, chartContainer, xCenter)
-            radarChart.drawPoints(serie, chartContainer, xCenter, yCenter, scales)
-            radarChart.drawShape(serie, chartContainer, xCenter, yCenter, scales)
+            radarChart.drawPoints(serie, chartContainer, xCenter, yCenter, scales, 'blue')
+            radarChart.drawShape(serie, chartContainer, xCenter, yCenter, scales, 'blue')
+        } else {
+            radarChart.drawPoints(serie, chartContainer, xCenter, yCenter, scales, 'orange')
+            radarChart.drawShape(serie, chartContainer, xCenter, yCenter, scales, 'orange')
         }
     });
 }

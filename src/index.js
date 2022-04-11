@@ -42,7 +42,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
       }
 
       graphSize = {
-        width: (svgSize.width - margin.right - margin.left) / 3,
+        width: svgSize.width / 3 - margin.left - margin.right,
         height: svgSize.height - margin.bottom - margin.top
       }
 
@@ -82,7 +82,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
       }
 
       graphSize = {
-        width: (svgSize.width - margin.right - margin.left) / 3,
+        width: svgSize.width / 3 - margin.left - margin.right,
         height: svgSize.height - margin.bottom - margin.top
       }
 

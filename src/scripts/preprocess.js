@@ -6,13 +6,13 @@ export function preprocessOffense(data) {
         new_data.push({
             Team: item['Equipe'],
             Season: item['Saison'],
-            Gls_per_game: item['Gls/match'],
-            XG_per_game: item['xG/match'],
-            Shot_target_pourcentage: item['% Tirs cadrés'],
-            Completed_dribbles_pourcentage: item['% Dribbles complétés'],
-            Received_passes_pourcentage: item['% Passes reçues'],
-            Completed_passes_pourcentage: item['% Passes complétées'],
-            Points_per_game: item['Pts/match']
+            'Gls/90': item['Gls/match'],
+            'xG/90': item['xG/match'],
+            'SoT%': item['% Tirs cadrés'],
+            'Drib%': item['% Dribbles complétés'],
+            'Rec%': item['% Passes reçues'],
+            'Cmp%': item['% Passes complétées'],
+            'Pts/90': item['Pts/match']
         })
     })
 

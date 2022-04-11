@@ -83,7 +83,7 @@ export function drawSteps(stepChoices, mins, scales, element, xCenter, yCenter) 
             stepContainer.append('text')
                 .attr('x', xCenter * (1 - scales[label](stepValue) * Math.sin(i * 2 * Math.PI / totalAxes)))
                 .attr('y', yCenter * (1 - scales[label](stepValue) * Math.cos(i * 2 * Math.PI / totalAxes)))
-                .text(stepValue)
+                .text(Math.abs(stepValue))
                 .attr('text-anchor', 'middle')
                 .attr('alignment-baseline', 'middle')
                 .attr('opacity', STEP_OPACITY)
@@ -110,7 +110,7 @@ export function drawSteps(stepChoices, mins, scales, element, xCenter, yCenter) 
         .attr('fill', 'white')
 }
 
-export function drawPoints(data, element, xCenter, yCenter, scales) {
+export function drawPoints(data, element, xCenter, yCenter, scales, colour) {
     var stats = getStats(data)
     var points = getCoordinates(stats, scales, xCenter, yCenter)
 
@@ -123,6 +123,7 @@ export function drawPoints(data, element, xCenter, yCenter, scales) {
         .attr('cx', function(d) { return d.x })
         .attr('cy', function(d) { return d.y })
         .attr('r', POINT_RADIUS)
+        .attr('fill', colour)
 }
 
 export function drawAxes(data, element, xCenter, yCenter) {
@@ -191,7 +192,7 @@ export function drawTicks(stepChoices, mins, scales, element, xCenter, yCenter) 
     })
 }
 
-export function drawShape(data, element, xCenter, yCenter, scales) {
+export function drawShape(data, element, xCenter, yCenter, scales, colour) {
     var stats = getStats(data)
     var points = getCoordinates(stats, scales, xCenter, yCenter)
 
@@ -205,7 +206,7 @@ export function drawShape(data, element, xCenter, yCenter, scales) {
         .attr('points', strPolygon)
         .attr('fill', 'transparent')
         .attr('stroke-width', SHAPE_STROKE_WIDTH + 'px')
-        .attr('stroke', 'black')
+        .attr('stroke', colour)
 }
 
 export function drawTitle(data, element, xCenter) {
