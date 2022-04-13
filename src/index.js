@@ -70,7 +70,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
     const bounds = d3.select('#chart-off').node().getBoundingClientRect();
     const selection = d3.select(".chart-off-svg");
     
-    setSizing({width: bounds.width, height: 450}, selection, marginRC1, true)
+    setSizing({width: bounds.width, height: bounds.height}, selection, marginRC1, true)
     buildRadarChart1()
 
     /**
@@ -84,7 +84,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
     window.addEventListener('resize', () => {
       const bounds = d3.select('#chart-off').node().getBoundingClientRect();
       const selection = d3.select(".chart-off-svg");
-      setSizing({width: bounds.width, height: 450}, selection, marginRC1, true)
+      setSizing({width: bounds.width, height: bounds.height}, selection, marginRC1, true)
       buildRadarChart1()
     })
   })
@@ -97,7 +97,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
     const bounds = d3.select('#chart-def').node().getBoundingClientRect();
     const selection = d3.select(".chart-def-svg");
 
-    setSizing({width: bounds.width, height: 450}, selection, marginRC2, true)
+    setSizing({width: bounds.width, height: bounds.height}, selection, marginRC2, true)
     buildRadarChart2()
 
     /**
@@ -111,7 +111,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
     window.addEventListener('resize', () => {
       const bounds = d3.select('#chart-def').node().getBoundingClientRect();
       const selection = d3.select(".chart-def-svg");
-      setSizing({width: bounds.width, height: 450}, selection, marginRC2, true)
+      setSizing({width: bounds.width, height: bounds.height}, selection, marginRC2, true)
       buildRadarChart2()
     })
   })
