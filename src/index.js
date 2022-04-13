@@ -8,6 +8,7 @@ import * as hover from './scripts/hover.js'
 import * as util from './scripts/util.js'
 
 import * as d3Chromatic from 'd3-scale-chromatic'
+import { getMin } from './scripts/radar_chart.js'
 
 /**
  * @file This file is the entry-point for the the code for TP3 for the course INF8808.
@@ -70,7 +71,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
     const bounds = d3.select('#chart-off').node().getBoundingClientRect();
     const selection = d3.select(".chart-off-svg");
     
-    setSizing({width: bounds.width, height: bounds.height}, selection, marginRC1, true)
+    setSizing({width: Math.min(1300, bounds.width), height: Math.min(450, bounds.height)}, selection, marginRC1, true)
     buildRadarChart1()
 
     /**
@@ -84,7 +85,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
     window.addEventListener('resize', () => {
       const bounds = d3.select('#chart-off').node().getBoundingClientRect();
       const selection = d3.select(".chart-off-svg");
-      setSizing({width: bounds.width, height: bounds.height}, selection, marginRC1, true)
+      setSizing({width: Math.min(1300, bounds.width), height: Math.min(450, bounds.height)}, selection, marginRC1, true)
       buildRadarChart1()
     })
   })
@@ -97,7 +98,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
     const bounds = d3.select('#chart-def').node().getBoundingClientRect();
     const selection = d3.select(".chart-def-svg");
 
-    setSizing({width: bounds.width, height: bounds.height}, selection, marginRC2, true)
+    setSizing({width: Math.min(1300, bounds.width), height: Math.min(450, bounds.height)}, selection, marginRC2, true)
     buildRadarChart2()
 
     /**
@@ -111,7 +112,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
     window.addEventListener('resize', () => {
       const bounds = d3.select('#chart-def').node().getBoundingClientRect();
       const selection = d3.select(".chart-def-svg");
-      setSizing({width: bounds.width, height: bounds.height}, selection, marginRC2, true)
+      setSizing({width: Math.min(1300, bounds.width), height: Math.min(450, bounds.height)}, selection, marginRC2, true)
       buildRadarChart2()
     })
   })
