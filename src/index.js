@@ -8,6 +8,7 @@ import * as hover from './scripts/hover.js'
 import * as util from './scripts/util.js'
 
 import * as d3Chromatic from 'd3-scale-chromatic'
+import d3Tip from 'd3-tip'
 
 /**
  * @file This file is the entry-point for the the code for TP3 for the course INF8808.
@@ -21,6 +22,9 @@ import * as d3Chromatic from 'd3-scale-chromatic'
   let graphSize
 
   const margin = { top: 65, right: 35, bottom: 35, left: 35 }
+
+  const tip = d3Tip().attr('class', 'd3-tip').html(function (d) { return hover.getContents(d) })
+  d3.select('.chart-off-svg').call(tip)
 
   //first viz
   d3.csv('./data_offensive.csv', d3.autoType).then(function (data) {
@@ -56,7 +60,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
       var color = d3.scaleOrdinal(['blue', 'orange'])
       color.domain(['Juventus', 'Top 7'])
       var svgElement = d3.select('.chart-off-svg')
-      viz.drawOffensiveRadarCharts(data, svgElement, graphSize.width, graphSize.height, margin)
+      viz.drawOffensiveRadarCharts(data, svgElement, graphSize.width, graphSize.height, margin, tip)
       legend.drawLegend(color, svgElement)
     }
 
@@ -99,7 +103,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
       var color = d3.scaleOrdinal(['blue', 'orange'])
       color.domain(['Juventus', 'Top 7'])
       var svgElement = d3.select('.chart-def-svg')
-      viz.drawDefensiveRadarChart(data, svgElement, graphSize.width, graphSize.height, margin)
+      viz.drawDefensiveRadarChart(data, svgElement, graphSize.width, graphSize.height, margin, tip)
       legend.drawLegend(color, svgElement)  
     }
 

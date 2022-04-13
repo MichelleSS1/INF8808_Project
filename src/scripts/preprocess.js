@@ -39,3 +39,27 @@ export function preprocessDefense(data) {
 
     return new_data
 }
+
+export function preprocessTooltipOff(labels, description) {
+    let tooltips = []
+    labels.forEach((label, i) => {
+        tooltips.push({
+            label: label,
+            description: description[i]
+        })
+    })
+
+    return tooltips
+}
+
+export function preprocessTooltipDef(labels, description) {
+    let tooltips = []
+    labels.forEach((label, i) => {
+        tooltips.push({
+            label: label,
+            description: description[i]
+        })
+    })
+
+    return tooltips
+}

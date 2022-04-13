@@ -144,25 +144,26 @@ export function drawAxes(data, element, xCenter, yCenter) {
         .attr('stroke-width', AXE_STROKE_WIDTH + 'px')
 }
 
-export function drawAxesLabel(data, element, xCenter, yCenter) {
+export function drawAxesLabel(data, element, xCenter, yCenter, tip) {
     var stats = getStats(data)
-
     // Build array containing labels.
     var labels = Object.keys(stats)
     var totalAxes = labels.length
-
+    console.log(data)
     element.append('g')
         .attr('class', 'labels')
         .selectAll('text')
-        .data(labels)
+        .data(data)
         .enter()
         .append('text')
         .attr('x', function(_, i) { return xCenter * (1 - LABELS_MULTIPLIER_FACTOR * Math.sin(i * 2 * Math.PI / totalAxes)); })
         .attr('y', function(_, i) { return yCenter * (1 - LABELS_MULTIPLIER_FACTOR * Math.cos(i * 2 * Math.PI / totalAxes)); })
         .attr('text-anchor', 'middle')
+        .on("mouseover", function(d) { tip.show(d,this) })
+        .on("mouseout", tip.hide)
         .style('font-size', LABELS_FONT_SIZE + 'px')
         .style('font-weight', 'bold')
-        .text(function(d) { return d; })
+        .text(function(d) {return d.label; })
 }
 
 export function drawTicks(stepChoices, mins, scales, element, xCenter, yCenter) {

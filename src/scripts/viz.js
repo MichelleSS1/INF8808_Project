@@ -1,4 +1,5 @@
 import * as radarChart from './radar_chart'
+import * as preproc from './preprocess.js'
 
 /**
  * Calls the functions from radar_chart.js to build the radar
@@ -10,7 +11,7 @@ import * as radarChart from './radar_chart'
  * @param { Number } height The height of the SVG tag.
  * @param { Object } margin The margins between the container and the SVG space.
  */
-export function drawOffensiveRadarCharts(data, element, width, height, margin) {
+export function drawOffensiveRadarCharts(data, element, width, height, margin, tip) {
     var xCenter = width / 2
     var yCenter = height / 2
 
@@ -23,7 +24,10 @@ export function drawOffensiveRadarCharts(data, element, width, height, margin) {
     var mins = {}
     var stats = radarChart.getStats(data[0])
     var labels = Object.keys(stats)
-
+    var descriptions = Object.values(stats)
+    var tooltips = preproc.preprocessTooltipOff(labels, descriptions)
+    data = data.slice(1,data.length)
+    console.log(labels)
     labels.forEach(function(label) {
         var min = radarChart.getMin(data, label)
         mins[label] = min
@@ -44,7 +48,7 @@ export function drawOffensiveRadarCharts(data, element, width, height, margin) {
             .attr('transform', 'translate(' + xTranslation + ' 0)')
         if (serie.Team === 'Juventus') {
             radarChart.drawAxes(serie, chartContainer, xCenter, yCenter)
-            radarChart.drawAxesLabel(serie, chartContainer, xCenter, yCenter)
+            radarChart.drawAxesLabel(tooltips, chartContainer, xCenter, yCenter, tip)
             radarChart.drawTicks(steps, mins, scales, chartContainer, xCenter, yCenter)
             radarChart.drawSteps(steps, mins, scales, chartContainer, xCenter, yCenter)
             radarChart.drawTitle(serie, chartContainer, xCenter)
@@ -67,7 +71,7 @@ export function drawOffensiveRadarCharts(data, element, width, height, margin) {
  * @param { Number } height The height of the SVG tag.
  * @param { Object } margin The margins between the container and the SVG space.
  */
-export function drawDefensiveRadarChart(data, element, width, height, margin) {
+export function drawDefensiveRadarChart(data, element, width, height, margin, tip) {
     var xCenter = width / 2
     var yCenter = height / 2
 
@@ -80,8 +84,10 @@ export function drawDefensiveRadarChart(data, element, width, height, margin) {
     var mins = {}
     var stats = radarChart.getStats(data[0])
     var labels = Object.keys(stats)
-
-    console.log(data)
+    var descriptions = Object.values(stats)
+    var tooltips = preproc.preprocessTooltipDef(labels, descriptions)
+    data = data.slice(1,data.length)
+    console.log(labels)
 
     labels.forEach(function(label) {
         var min = radarChart.getMin(data, label)
@@ -103,7 +109,7 @@ export function drawDefensiveRadarChart(data, element, width, height, margin) {
             .attr('transform', 'translate(' + xTranslation + ' 0)')
         if (serie.Team === 'Juventus') {
             radarChart.drawAxes(serie, chartContainer, xCenter, yCenter)
-            radarChart.drawAxesLabel(serie, chartContainer, xCenter, yCenter)
+            radarChart.drawAxesLabel(tooltips, chartContainer, xCenter, yCenter, tip)
             radarChart.drawTicks(steps, mins, scales, chartContainer, xCenter, yCenter)
             radarChart.drawSteps(steps, mins, scales, chartContainer, xCenter, yCenter)
             radarChart.drawTitle(serie, chartContainer, xCenter)

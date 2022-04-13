@@ -1,4 +1,5 @@
 ﻿Equipe,Saison,Gls/match,xG/match,% Tirs cadrés,% Dribbles complétés,% Passes reçues,% Passes complétées,Pts/match
+Nom de l'équipe,Année de la saison en question,Nombre de buts par match,Nombre de buts expectés par match (incluant les tirs de pénalité),Pourcentage de tirs cadrés,Pourcentage de dribbles complétés,Pourcentage de passes reçues,Pourcentage de passes complétées,Nombre de points par match
 Juventus,2019-2020,2,68.7,33.3,63.8,90.3,86.9,2.18
 Top 7,2019-2020,2.01,69.4,33.7,62.4,88.6,84.3,1.95
 Juventus,2020-2021,2.03,74.2,34.8,65.5,89.1,86.7,2.05
