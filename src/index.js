@@ -21,10 +21,15 @@ import * as d3Chromatic from 'd3-scale-chromatic'
   let graphSize
 
   const margin = { top: 35, right: 200, bottom: 35, left: 200 }
+  const bumpRadius = 13
 
+  const xScale = d3.scalePoint()
+  const yScale = d3.scalePoint()
 
-  d3.csv('', d3.autoType).then(function (data) {
-    //TODO
+  d3.json('./serieA_ranking.json', d3.autoType).then(function (data) {
+    const chartData = preproc.getChartData(data);
+    const leftTeamNames = preproc.getLeftTeamNames(data);
+    const rightTeamNames = preproc.getRightTeamNames(data);
 
     setSizing()
     build()
@@ -33,7 +38,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
      *   This function handles the graph's sizing.
      */
     function setSizing () {
-      bounds = d3.select('.graph').node().getBoundingClientRect()
+      bounds = d3.select('.graph.bumpchart').node().getBoundingClientRect()
 
       svgSize = {
         width: bounds.width,
@@ -45,7 +50,7 @@ import * as d3Chromatic from 'd3-scale-chromatic'
         height: svgSize.height - margin.bottom - margin.top
       }
 
-      helper.setCanvasSize(svgSize.width, svgSize.height)
+      helper.setCanvasSize("chart-rank-svg", svgSize.width, svgSize.height)
     }
 
     /**
