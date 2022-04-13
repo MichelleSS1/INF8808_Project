@@ -62,6 +62,43 @@ import d3Tip from 'd3-tip'
       var svgElement = d3.select('.chart-off-svg')
       viz.drawOffensiveRadarCharts(data, svgElement, graphSize.width, graphSize.height, margin, tip)
       legend.drawLegend(color, svgElement)
+      svgElement.append('g')
+      .append('rect')
+      .attr('width', 75)
+      .attr('height', 25)
+      .attr('transform', 'translate(0,510)')
+      .attr('background-color', 'white')
+      .text('Toggle Juventus')
+      .on('click', function() {
+        if(svgElement.selectAll('#blue').style('opacity') == 0.15) {
+          svgElement.selectAll('#blue')
+          .style('opacity', 1)
+        }else {
+          svgElement.selectAll('#blue')
+          .style('opacity', 0.15)
+        }
+
+      })
+      .style('cursor', 'pointer')
+
+      svgElement.append('g')
+      .append('rect')
+      .attr('width', 75)
+      .attr('height', 25)
+      .attr('transform', 'translate(85,510)')
+      .attr('background-color', 'white')
+      .text('Toggle Top 7')
+      .on('click', function() {
+        if(svgElement.selectAll('#orange').style('opacity') == 0.15) {
+          svgElement.selectAll('#orange')
+          .style('opacity', 1)
+        }else {
+          svgElement.selectAll('#orange')
+          .style('opacity', 0.15)
+        }
+
+      })
+      .style('cursor', 'pointer')
     }
 
     window.addEventListener('resize', () => {
@@ -105,6 +142,43 @@ import d3Tip from 'd3-tip'
       var svgElement = d3.select('.chart-def-svg')
       viz.drawDefensiveRadarChart(data, svgElement, graphSize.width, graphSize.height, margin, tip)
       legend.drawLegend(color, svgElement)  
+      svgElement.append('g')
+      .append('rect')
+      .attr('width', 75)
+      .attr('height', 25)
+      .attr('transform', 'translate(0,510)')
+      .attr('background-color', 'white')
+      .text('Toggle Juventus')
+      .on('click', function() {
+        if(svgElement.selectAll('#blue').style('opacity') == 0.15) {
+          svgElement.selectAll('#blue')
+          .style('opacity', 1)
+        }else {
+          svgElement.selectAll('#blue')
+          .style('opacity', 0.15)
+        }
+
+      })
+      .style('cursor', 'pointer')
+
+      svgElement.append('g')
+      .append('rect')
+      .attr('width', 75)
+      .attr('height', 25)
+      .attr('transform', 'translate(85,510)')
+      .attr('background-color', 'white')
+      .text('Toggle Top 7')
+      .on('click', function() {
+        if(svgElement.selectAll('#orange').style('opacity') == 0.15) {
+          svgElement.selectAll('#orange')
+          .style('opacity', 1)
+        }else {
+          svgElement.selectAll('#orange')
+          .style('opacity', 0.15)
+        }
+
+      })
+      .style('cursor', 'pointer')
     }
 
 

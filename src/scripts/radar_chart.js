@@ -116,6 +116,7 @@ export function drawPoints(data, element, xCenter, yCenter, scales, colour) {
 
     element.append('g')
         .attr('class', 'points')
+        .attr('id', colour)
         .selectAll('circle')
         .data(points)
         .enter()
@@ -124,7 +125,16 @@ export function drawPoints(data, element, xCenter, yCenter, scales, colour) {
         .attr('cy', function(d) { return d.y })
         .attr('r', POINT_RADIUS)
         .attr('fill', colour)
-}
+        // .on('click', function() {
+        //     if(element.selectAll('#'+colour).style('opacity') == 0.1) {
+        //       element.selectAll('#'+colour)
+        //       .style('opacity', 1)
+        //     }else {
+        //       element.selectAll('#'+colour)
+        //       .style('opacity', 0.1)
+        //     }
+        // })
+}       
 
 export function drawAxes(data, element, xCenter, yCenter) {
     var totalAxes = Object.keys(data).length - TOTAL_HEADERS_COUNT      // Ignores seasons and team name.
@@ -159,8 +169,15 @@ export function drawAxesLabel(data, element, xCenter, yCenter, tip) {
         .attr('x', function(_, i) { return xCenter * (1 - LABELS_MULTIPLIER_FACTOR * Math.sin(i * 2 * Math.PI / totalAxes)); })
         .attr('y', function(_, i) { return yCenter * (1 - LABELS_MULTIPLIER_FACTOR * Math.cos(i * 2 * Math.PI / totalAxes)); })
         .attr('text-anchor', 'middle')
-        .on("mouseover", function(d) { tip.show(d,this) })
-        .on("mouseout", tip.hide)
+        .on("mouseover", function(d) { 
+            tip.show(d,this)
+            d3.select(this)
+            .style('font-size', 16 + 'px')
+         })
+        .on("mouseout", function() {
+            tip.hide()
+            d3.select(this).style('font-size', LABELS_FONT_SIZE + 'px')
+        })
         .style('font-size', LABELS_FONT_SIZE + 'px')
         .style('font-weight', 'bold')
         .text(function(d) {return d.label; })
