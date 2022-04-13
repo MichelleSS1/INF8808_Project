@@ -23,10 +23,10 @@ import * as d3Chromatic from 'd3-scale-chromatic'
   /**
      *   This function handles the radar charts' sizing.
      */
-   function setSizingRC(selection, margin) {
+   function setSizingRC(bounds, selection, margin, isRadarChart) {
 
     svgSize = {
-      width: 1300,
+      width: bounds.width,
       height: 450
     }
 
@@ -41,15 +41,17 @@ import * as d3Chromatic from 'd3-scale-chromatic'
   /**
    *   This function handles the graph's sizing.
    */
-  function setSizing(bounds, selection, margin) {
+  function setSizing(dim, selection, margin, isRadarChart) {
     
     svgSize = {
-      width: bounds.width,
-      height: 550
+      width: dim.width,
+      height: dim.height
     }
     
+    const width = isRadarChart ? svgSize.width / 3 : svgSize.width
+
     graphSize = {
-      width: svgSize.width - margin.right - margin.left,
+      width: width - margin.right - margin.left,
       height: svgSize.height - margin.bottom - margin.top
     }
 
@@ -65,9 +67,10 @@ import * as d3Chromatic from 'd3-scale-chromatic'
     data = preproc.preprocessOffense(data)
     console.log(data)
     
+    const bounds = d3.select('#chart-off').node().getBoundingClientRect();
     const selection = d3.select(".chart-off-svg");
     
-    setSizingRC(selection, marginRC1)
+    setSizing({width: bounds.width, height: 450}, selection, marginRC1, true)
     buildRadarChart1()
 
     /**
@@ -79,8 +82,9 @@ import * as d3Chromatic from 'd3-scale-chromatic'
     }
 
     window.addEventListener('resize', () => {
+      const bounds = d3.select('#chart-off').node().getBoundingClientRect();
       const selection = d3.select(".chart-off-svg");
-      setSizingRC(selection, marginRC1)
+      setSizing({width: bounds.width, height: 450}, selection, marginRC1, true)
       buildRadarChart1()
     })
   })
@@ -90,9 +94,10 @@ import * as d3Chromatic from 'd3-scale-chromatic'
     const marginRC2 = { top: 65, right: 35, bottom: 35, left: 35 }
     data = preproc.preprocessDefense(data)
 
+    const bounds = d3.select('#chart-def').node().getBoundingClientRect();
     const selection = d3.select(".chart-def-svg");
 
-    setSizingRC(selection, marginRC2)
+    setSizing({width: bounds.width, height: 450}, selection, marginRC2, true)
     buildRadarChart2()
 
     /**
@@ -104,8 +109,9 @@ import * as d3Chromatic from 'd3-scale-chromatic'
     }
 
     window.addEventListener('resize', () => {
+      const bounds = d3.select('#chart-def').node().getBoundingClientRect();
       const selection = d3.select(".chart-def-svg");
-      setSizingRC(selection, marginRC2)
+      setSizing({width: bounds.width, height: 450}, selection, marginRC2, true)
       buildRadarChart2()
     })
   })
