@@ -38,12 +38,12 @@ import * as d3Chromatic from 'd3-scale-chromatic'
 
       svgSize = {
         width: 1300,
-        height: 450
+        height: 550
       }
 
       graphSize = {
         width: svgSize.width / 3 - margin.left - margin.right,
-        height: svgSize.height - margin.bottom - margin.top
+        height: svgSize.height - 100 - margin.bottom - margin.top
       }
 
       helper.setCanvasSize(d3.select('.chart-off-svg'), svgSize.width, svgSize.height)
@@ -53,8 +53,11 @@ import * as d3Chromatic from 'd3-scale-chromatic'
      *   This function builds the graph.
      */
     function build () {
+      var color = d3.scaleOrdinal(['blue', 'orange'])
+      color.domain(['Juventus', 'Top 7'])
       var svgElement = d3.select('.chart-off-svg')
       viz.drawOffensiveRadarCharts(data, svgElement, graphSize.width, graphSize.height, margin)
+      legend.drawLegend(color, svgElement)
     }
 
     window.addEventListener('resize', () => {
@@ -78,12 +81,12 @@ import * as d3Chromatic from 'd3-scale-chromatic'
 
       svgSize = {
         width: 1300,
-        height: 450
+        height: 550
       }
 
       graphSize = {
         width: svgSize.width / 3 - margin.left - margin.right,
-        height: svgSize.height - margin.bottom - margin.top
+        height: svgSize.height - 100 - margin.bottom - margin.top
       }
 
       helper.setCanvasSize(d3.select('.chart-def-svg'), svgSize.width, svgSize.height)
@@ -93,9 +96,13 @@ import * as d3Chromatic from 'd3-scale-chromatic'
      *   This function builds the graph.
      */
     function build () {
+      var color = d3.scaleOrdinal(['blue', 'orange'])
+      color.domain(['Juventus', 'Top 7'])
       var svgElement = d3.select('.chart-def-svg')
       viz.drawDefensiveRadarChart(data, svgElement, graphSize.width, graphSize.height, margin)
+      legend.drawLegend(color, svgElement)  
     }
+
 
     window.addEventListener('resize', () => {
       setSizing()

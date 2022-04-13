@@ -94,3 +94,6 @@ button:hover, button:active {
   .axis path {
       opacity: 0;
   }
+.graph.radarchart {
+    flex-direction: column-reverse;
+}
