@@ -62,13 +62,20 @@ import d3Tip from 'd3-tip'
       var svgElement = d3.select('.chart-off-svg')
       viz.drawOffensiveRadarCharts(data, svgElement, graphSize.width, graphSize.height, margin, tip)
       legend.drawLegend(color, svgElement)
-      svgElement.append('g')
-      .append('rect')
-      .attr('width', 75)
+
+      var rectBlue = svgElement.append('g')
+      rectBlue.append('rect')
+      .attr('width', 125)
       .attr('height', 25)
       .attr('transform', 'translate(0,510)')
-      .attr('background-color', 'white')
+      .attr('fill', 'grey')
+      .attr('stroke', 'black')
+      .attr('strke-width', '1px')
+      .style('cursor', 'pointer')
+
+      rectBlue.append('text')
       .text('Toggle Juventus')
+      .attr('transform', 'translate(0,526)')
       .on('click', function() {
         if(svgElement.selectAll('#blue').style('opacity') == 0.15) {
           svgElement.selectAll('#blue')
@@ -81,13 +88,19 @@ import d3Tip from 'd3-tip'
       })
       .style('cursor', 'pointer')
 
-      svgElement.append('g')
-      .append('rect')
-      .attr('width', 75)
+      var rectOrange = svgElement.append('g')
+      rectOrange.append('rect')
+      .attr('width', 100)
       .attr('height', 25)
-      .attr('transform', 'translate(85,510)')
-      .attr('background-color', 'white')
+      .attr('transform', 'translate(135,510)')
+      .attr('fill', 'grey')
+      .attr('stroke', 'black')
+      .attr('strke-width', '1px')
+      .style('cursor', 'pointer')
+
+      rectOrange.append('text')
       .text('Toggle Top 7')
+      .attr('transform', 'translate(135,526)')
       .on('click', function() {
         if(svgElement.selectAll('#orange').style('opacity') == 0.15) {
           svgElement.selectAll('#orange')
@@ -142,13 +155,19 @@ import d3Tip from 'd3-tip'
       var svgElement = d3.select('.chart-def-svg')
       viz.drawDefensiveRadarChart(data, svgElement, graphSize.width, graphSize.height, margin, tip)
       legend.drawLegend(color, svgElement)  
-      svgElement.append('g')
-      .append('rect')
-      .attr('width', 75)
+      var rectBlue = svgElement.append('g')
+      rectBlue.append('rect')
+      .attr('width', 125)
       .attr('height', 25)
       .attr('transform', 'translate(0,510)')
-      .attr('background-color', 'white')
+      .attr('fill', 'grey')
+      .attr('stroke', 'black')
+      .attr('strke-width', '1px')
+      .style('cursor', 'pointer')
+
+      rectBlue.append('text')
       .text('Toggle Juventus')
+      .attr('transform', 'translate(0,526)')
       .on('click', function() {
         if(svgElement.selectAll('#blue').style('opacity') == 0.15) {
           svgElement.selectAll('#blue')
@@ -161,13 +180,19 @@ import d3Tip from 'd3-tip'
       })
       .style('cursor', 'pointer')
 
-      svgElement.append('g')
-      .append('rect')
-      .attr('width', 75)
+      var rectOrange = svgElement.append('g')
+      rectOrange.append('rect')
+      .attr('width', 100)
       .attr('height', 25)
-      .attr('transform', 'translate(85,510)')
-      .attr('background-color', 'white')
+      .attr('transform', 'translate(135,510)')
+      .attr('fill', 'grey')
+      .attr('stroke', 'black')
+      .attr('strke-width', '1px')
+      .style('cursor', 'pointer')
+
+      rectOrange.append('text')
       .text('Toggle Top 7')
+      .attr('transform', 'translate(135,526)')
       .on('click', function() {
         if(svgElement.selectAll('#orange').style('opacity') == 0.15) {
           svgElement.selectAll('#orange')
