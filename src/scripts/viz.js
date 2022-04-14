@@ -121,3 +121,63 @@ export function drawDefensiveRadarChart(data, element, width, height, margin, ti
         }
     });
 }
+
+/**
+ * Adds the toggle buttons for each vizualiasation.
+ * 
+ * @param { SVGElement } svgElement The SVG element where the radar chart will be built.
+ */
+export function addButtons(svgElement) {
+
+    // Create button for the Juventus radar chart
+    var rectBlue = svgElement.append('g')
+    rectBlue.append('rect')
+    .attr('width', 125)
+    .attr('height', 25)
+    .attr('transform', 'translate(0,510)')
+    .attr('fill', 'grey')
+    .attr('stroke', 'black')
+    .attr('strke-width', '1px')
+    .style('cursor', 'pointer')
+
+    rectBlue.append('text')
+    .text('Toggle Juventus')
+    .attr('transform', 'translate(0,526)')
+    .on('click', function() {
+      if(svgElement.selectAll('#blue').style('opacity') == 0.15) {
+        svgElement.selectAll('#blue')
+        .style('opacity', 1)
+      }else {
+        svgElement.selectAll('#blue')
+        .style('opacity', 0.15)
+      }
+
+    })
+    .style('cursor', 'pointer')
+
+    // Create button for the Top 7 radar chart
+    var rectOrange = svgElement.append('g')
+    rectOrange.append('rect')
+    .attr('width', 100)
+    .attr('height', 25)
+    .attr('transform', 'translate(135,510)')
+    .attr('fill', 'grey')
+    .attr('stroke', 'black')
+    .attr('strke-width', '1px')
+    .style('cursor', 'pointer')
+
+    rectOrange.append('text')
+    .text('Toggle Top 7')
+    .attr('transform', 'translate(135,526)')
+    .on('click', function() {
+      if(svgElement.selectAll('#orange').style('opacity') == 0.15) {
+        svgElement.selectAll('#orange')
+        .style('opacity', 1)
+      }else {
+        svgElement.selectAll('#orange')
+        .style('opacity', 0.15)
+      }
+
+    })
+    .style('cursor', 'pointer')
+}

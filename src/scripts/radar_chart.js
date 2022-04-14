@@ -125,15 +125,6 @@ export function drawPoints(data, element, xCenter, yCenter, scales, colour) {
         .attr('cy', function(d) { return d.y })
         .attr('r', POINT_RADIUS)
         .attr('fill', colour)
-        // .on('click', function() {
-        //     if(element.selectAll('#'+colour).style('opacity') == 0.1) {
-        //       element.selectAll('#'+colour)
-        //       .style('opacity', 1)
-        //     }else {
-        //       element.selectAll('#'+colour)
-        //       .style('opacity', 0.1)
-        //     }
-        // })
 }       
 
 export function drawAxes(data, element, xCenter, yCenter) {
