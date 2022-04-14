@@ -21,14 +21,17 @@ import d3Tip from 'd3-tip'
   let svgSize
   let graphSize
 
+  const MIN_CHART_HEIGHT = 450
+  const MIN_CHART_WIDTH = 800
+
   /**
      *   This function handles the radar charts' sizing.
      */
-   function setSizingRC(bounds, selection, margin, isRadarChart) {
+   function setSizingRC(bounds, selection, margin) {
 
     svgSize = {
       width: bounds.width,
-      height: 450
+      height: bounds.height
     }
 
     graphSize = {
@@ -67,7 +70,7 @@ import d3Tip from 'd3-tip'
 
   //first viz
   d3.csv('./data_offensive.csv', d3.autoType).then(function (data) {
-    const marginRC1 = { top: 65, right: 35, bottom: 35, left: 35 }
+    const marginRC1 = { top: 65, right: 35, bottom: 125, left: 35 }
 
     data = preproc.preprocessOffense(data)
     console.log(data)
@@ -75,7 +78,7 @@ import d3Tip from 'd3-tip'
     const bounds = d3.select('#chart-off').node().getBoundingClientRect();
     const selection = d3.select(".chart-off-svg");
     
-    setSizing({width: Math.max(1300, bounds.width), height: Math.max(550, bounds.height)}, selection, marginRC1, true)
+    setSizingRC({width: Math.max(MIN_CHART_WIDTH, bounds.width * 0.8), height: Math.max(MIN_CHART_HEIGHT, bounds.height)}, selection, marginRC1)
     buildRadarChart1()
 
     /**
@@ -86,27 +89,27 @@ import d3Tip from 'd3-tip'
       color.domain(['Juventus', 'Top 7'])
       var svgElement = d3.select('.chart-off-svg')
       viz.drawOffensiveRadarCharts(data, svgElement, graphSize.width, graphSize.height, marginRC1, tip)
-      legend.drawLegend(color, svgElement)
-      viz.addButtons(svgElement)
+      legend.drawLegend(color, svgElement, graphSize.height, marginRC1)
+      viz.addButtons(svgElement, graphSize.height, marginRC1)
     }
 
     window.addEventListener('resize', () => {
       const bounds = d3.select('#chart-off').node().getBoundingClientRect();
       const selection = d3.select(".chart-off-svg");
-      setSizing({width: Math.max(1300, bounds.width), height: Math.max(550, bounds.height)}, selection, marginRC1, true)
+      setSizingRC({width: Math.max(MIN_CHART_WIDTH, bounds.width * 0.8), height: Math.max(MIN_CHART_HEIGHT, bounds.height)}, selection, marginRC1)
       buildRadarChart1()
     })
   })
 
   //second viz
   d3.csv('./data_defensive.csv', d3.autoType).then(function (data) {
-    const marginRC2 = { top: 65, right: 35, bottom: 35, left: 35 }
+    const marginRC2 = { top: 65, right: 35, bottom: 125, left: 35 }
     data = preproc.preprocessDefense(data)
 
     const bounds = d3.select('#chart-def').node().getBoundingClientRect();
     const selection = d3.select(".chart-def-svg");
 
-    setSizing({width: Math.max(1300, bounds.width), height: Math.max(550, bounds.height)}, selection, marginRC2, true)
+    setSizingRC({width: Math.max(MIN_CHART_WIDTH, bounds.width * 0.8), height: Math.max(MIN_CHART_HEIGHT, bounds.height)}, selection, marginRC2)
     buildRadarChart2()
 
     /**
@@ -117,15 +120,15 @@ import d3Tip from 'd3-tip'
       color.domain(['Juventus', 'Top 7'])
       var svgElement = d3.select('.chart-def-svg')
       viz.drawDefensiveRadarChart(data, svgElement, graphSize.width, graphSize.height, marginRC2, tip)
-      legend.drawLegend(color, svgElement)  
-      viz.addButtons(svgElement)
+      legend.drawLegend(color, svgElement, graphSize.height, marginRC2)  
+      viz.addButtons(svgElement, graphSize.height, marginRC2)
     }
 
 
     window.addEventListener('resize', () => {
       const bounds = d3.select('#chart-def').node().getBoundingClientRect();
       const selection = d3.select(".chart-def-svg");
-      setSizing({width: Math.max(1300, bounds.width), height: Math.max(550, bounds.height)}, selection, marginRC2, true)
+      setSizingRC({width: Math.max(MIN_CHART_WIDTH, bounds.width * 0.8), height: Math.max(MIN_CHART_HEIGHT, bounds.height)}, selection, marginRC2)
       buildRadarChart2()
     })
   })

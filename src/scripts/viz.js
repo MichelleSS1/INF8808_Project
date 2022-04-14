@@ -131,14 +131,13 @@ export function drawDefensiveRadarChart(data, element, width, height, margin, ti
  * 
  * @param { SVGElement } svgElement The SVG element where the radar chart will be built.
  */
-export function addButtons(svgElement) {
-
+export function addButtons(svgElement, graphHeight, margin) {
     // Create button for the Juventus radar chart
     var rectBlue = svgElement.append('g')
     rectBlue.append('rect')
     .attr('width', 125)
     .attr('height', 25)
-    .attr('transform', 'translate(0,510)')
+    .attr('transform', 'translate(0, ' + (graphHeight + margin.bottom) + ')')
     .attr('fill', 'grey')
     .attr('stroke', 'black')
     .attr('strke-width', '1px')
@@ -146,7 +145,7 @@ export function addButtons(svgElement) {
 
     rectBlue.append('text')
     .text('Toggle Juventus')
-    .attr('transform', 'translate(0,526)')
+    .attr('transform', 'translate(0,' + (graphHeight + margin.bottom + 20) + ')')
     .on('click', function() {
       if(svgElement.selectAll('#blue').style('opacity') == 0.15) {
         svgElement.selectAll('#blue')
@@ -164,7 +163,7 @@ export function addButtons(svgElement) {
     rectOrange.append('rect')
     .attr('width', 100)
     .attr('height', 25)
-    .attr('transform', 'translate(135,510)')
+    .attr('transform', 'translate(135,' + (graphHeight + margin.bottom) + ')')
     .attr('fill', 'grey')
     .attr('stroke', 'black')
     .attr('strke-width', '1px')
@@ -172,7 +171,7 @@ export function addButtons(svgElement) {
 
     rectOrange.append('text')
     .text('Toggle Top 7')
-    .attr('transform', 'translate(135,526)')
+    .attr('transform', 'translate(135,' + (graphHeight + margin.bottom + 20) + ')')
     .on('click', function() {
       if(svgElement.selectAll('#orange').style('opacity') == 0.15) {
         svgElement.selectAll('#orange')
