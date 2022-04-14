@@ -93,6 +93,19 @@ button:hover, button:active {
   .axis path {
       opacity: 0;
   }
+
 .graph.radarchart {
     flex-direction: column-reverse;
+}
+
+.first-rank {
+    color: goldenrod;
+}
+
+.second-rank {
+    color: silver;
+}
+
+.third-rank {
+    color: brown;
 }
