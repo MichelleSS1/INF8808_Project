@@ -7,8 +7,6 @@ import * as legend from './scripts/legend.js'
 import * as hover from './scripts/hover.js'
 import * as util from './scripts/util.js'
 
-import * as d3Chromatic from 'd3-scale-chromatic'
-import { getMin } from './scripts/radar_chart.js'
 
 /**
  * @file This file is the entry-point for the the code for TP3 for the course INF8808.
