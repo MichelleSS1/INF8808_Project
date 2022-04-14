@@ -1,4 +1,5 @@
 import * as radarChart from './radar_chart'
+import * as preproc from './preprocess.js'
 import { range } from "./util";
 
 
@@ -14,7 +15,7 @@ import { range } from "./util";
  * @param { Number } height The height of the SVG tag.
  * @param { Object } margin The margins between the container and the SVG space.
  */
-export function drawOffensiveRadarCharts(data, element, width, height, margin) {
+export function drawOffensiveRadarCharts(data, element, width, height, margin, tip) {
     var xCenter = width / 2
     var yCenter = height / 2
 
@@ -27,7 +28,10 @@ export function drawOffensiveRadarCharts(data, element, width, height, margin) {
     var mins = {}
     var stats = radarChart.getStats(data[0])
     var labels = Object.keys(stats)
-
+    var descriptions = Object.values(stats)
+    var tooltips = preproc.preprocessTooltipOff(labels, descriptions)
+    data = data.slice(1,data.length)
+    console.log(labels)
     labels.forEach(function(label) {
         var min = radarChart.getMin(data, label)
         mins[label] = min
@@ -48,7 +52,7 @@ export function drawOffensiveRadarCharts(data, element, width, height, margin) {
             .attr('transform', 'translate(' + xTranslation + ' 0)')
         if (serie.Team === 'Juventus') {
             radarChart.drawAxes(serie, chartContainer, xCenter, yCenter)
-            radarChart.drawAxesLabel(serie, chartContainer, xCenter, yCenter)
+            radarChart.drawAxesLabel(tooltips, chartContainer, xCenter, yCenter, tip)
             radarChart.drawTicks(steps, mins, scales, chartContainer, xCenter, yCenter)
             radarChart.drawSteps(steps, mins, scales, chartContainer, xCenter, yCenter)
             radarChart.drawTitle(serie, chartContainer, xCenter)
@@ -71,7 +75,7 @@ export function drawOffensiveRadarCharts(data, element, width, height, margin) {
  * @param { Number } height The height of the SVG tag.
  * @param { Object } margin The margins between the container and the SVG space.
  */
-export function drawDefensiveRadarChart(data, element, width, height, margin) {
+export function drawDefensiveRadarChart(data, element, width, height, margin, tip) {
     var xCenter = width / 2
     var yCenter = height / 2
 
@@ -84,8 +88,10 @@ export function drawDefensiveRadarChart(data, element, width, height, margin) {
     var mins = {}
     var stats = radarChart.getStats(data[0])
     var labels = Object.keys(stats)
-
-    console.log(data)
+    var descriptions = Object.values(stats)
+    var tooltips = preproc.preprocessTooltipDef(labels, descriptions)
+    data = data.slice(1,data.length)
+    console.log(labels)
 
     labels.forEach(function(label) {
         var min = radarChart.getMin(data, label)
@@ -107,7 +113,7 @@ export function drawDefensiveRadarChart(data, element, width, height, margin) {
             .attr('transform', 'translate(' + xTranslation + ' 0)')
         if (serie.Team === 'Juventus') {
             radarChart.drawAxes(serie, chartContainer, xCenter, yCenter)
-            radarChart.drawAxesLabel(serie, chartContainer, xCenter, yCenter)
+            radarChart.drawAxesLabel(tooltips, chartContainer, xCenter, yCenter, tip)
             radarChart.drawTicks(steps, mins, scales, chartContainer, xCenter, yCenter)
             radarChart.drawSteps(steps, mins, scales, chartContainer, xCenter, yCenter)
             radarChart.drawTitle(serie, chartContainer, xCenter)
@@ -120,6 +126,64 @@ export function drawDefensiveRadarChart(data, element, width, height, margin) {
     });
 }
 
+/**
+ * Adds the toggle buttons for each vizualiasation.
+ * 
+ * @param { SVGElement } svgElement The SVG element where the radar chart will be built.
+ */
+export function addButtons(svgElement, graphHeight, margin) {
+    // Create button for the Juventus radar chart
+    var rectBlue = svgElement.append('g')
+    rectBlue.append('rect')
+    .attr('width', 125)
+    .attr('height', 25)
+    .attr('transform', 'translate(0, ' + (graphHeight + margin.bottom) + ')')
+    .attr('fill', 'grey')
+    .attr('stroke', 'black')
+    .attr('strke-width', '1px')
+    .style('cursor', 'pointer')
+
+    rectBlue.append('text')
+    .text('Toggle Juventus')
+    .attr('transform', 'translate(0,' + (graphHeight + margin.bottom + 20) + ')')
+    .on('click', function() {
+      if(svgElement.selectAll('#blue').style('opacity') == 0.15) {
+        svgElement.selectAll('#blue')
+        .style('opacity', 1)
+      }else {
+        svgElement.selectAll('#blue')
+        .style('opacity', 0.15)
+      }
+
+    })
+    .style('cursor', 'pointer')
+
+    // Create button for the Top 7 radar chart
+    var rectOrange = svgElement.append('g')
+    rectOrange.append('rect')
+    .attr('width', 100)
+    .attr('height', 25)
+    .attr('transform', 'translate(135,' + (graphHeight + margin.bottom) + ')')
+    .attr('fill', 'grey')
+    .attr('stroke', 'black')
+    .attr('strke-width', '1px')
+    .style('cursor', 'pointer')
+
+    rectOrange.append('text')
+    .text('Toggle Top 7')
+    .attr('transform', 'translate(135,' + (graphHeight + margin.bottom + 20) + ')')
+    .on('click', function() {
+      if(svgElement.selectAll('#orange').style('opacity') == 0.15) {
+        svgElement.selectAll('#orange')
+        .style('opacity', 1)
+      }else {
+        svgElement.selectAll('#orange')
+        .style('opacity', 0.15)
+      }
+
+    })
+    .style('cursor', 'pointer')
+}
 
 /************************************** V4 - BUMP CHART *************************************/
 

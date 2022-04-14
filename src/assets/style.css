@@ -63,7 +63,6 @@ button:hover, button:active {
 }
 
 .viz-container{
-    height: 100%;
     padding: 0 10px;
 }
 
@@ -94,3 +93,19 @@ button:hover, button:active {
   .axis path {
       opacity: 0;
   }
+
+.graph.radarchart {
+    flex-direction: column-reverse;
+}
+
+.first-rank {
+    color: goldenrod;
+}
+
+.second-rank {
+    color: silver;
+}
+
+.third-rank {
+    color: brown;
+}

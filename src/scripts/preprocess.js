@@ -1,3 +1,9 @@
+/**
+ * Preprocesses the data from the .csv file.
+ * 
+ * @param { Object[] } data 
+ * @returns 
+ */
 /************************************** V1/2 - RADAR CHART *************************************/
 
 
@@ -60,6 +66,12 @@ export function preprocessOffense(data) {
     return new_data
 }
 
+/**
+ * Preprocesses the data from the .csv file.
+ * 
+ * @param { Object[] } data 
+ * @returns 
+ */
 export function preprocessDefense(data) {
 
     let new_data = []
@@ -81,6 +93,43 @@ export function preprocessDefense(data) {
     return new_data
 }
 
+/**
+ * Preprocesses the data for the tooltip's content.
+ * 
+ * @param { string[]} labels 
+ * @param { string[] } description 
+ * @returns 
+ */
+export function preprocessTooltipOff(labels, description) {
+    let tooltips = []
+    labels.forEach((label, i) => {
+        tooltips.push({
+            label: label,
+            description: description[i]
+        })
+    })
+
+    return tooltips
+}
+
+/**
+ * Preprocesses the data for the tooltip's content.
+ * 
+ * @param { string[] } labels 
+ * @param { string[] } description 
+ * @returns 
+ */
+export function preprocessTooltipDef(labels, description) {
+    let tooltips = []
+    labels.forEach((label, i) => {
+        tooltips.push({
+            label: label,
+            description: description[i]
+        })
+    })
+
+    return tooltips
+}
 
 /************************************** V4 - BUMP CHART *************************************/
 
