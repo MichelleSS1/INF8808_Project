@@ -1,0 +1,92 @@
+{
+    "2019-2020" : [
+        {
+            "Team" : "Juventus",
+            "Pts" : 0
+        },
+        {
+            "Team" : "Inter",
+            "Pts" : 0
+        },
+        {
+            "Team" : "Atalanta",
+            "Pts" : 0
+        },
+        {
+            "Team" : "Lazio",
+            "Pts" : 0
+        },
+        {
+            "Team" : "Roma",
+            "Pts" : 0
+        },
+        {
+            "Team" : "Milan",
+            "Pts" : 0
+        },
+        {
+            "Team" : "Napolitano",
+            "Pts" : 0
+        }
+    ],
+    "2020-2021" : [
+        {
+            "Team" : "Inter",
+            "Pts" : 0
+        },
+        {
+            "Team" : "Milan",
+            "Pts" : 0
+        },
+        {
+            "Team" : "Atalanta",
+            "Pts" : 0
+        },
+        {
+            "Team" : "Juventus",
+            "Pts" : 0
+        },
+        {
+            "Team" : "Napolitano",
+            "Pts" : 0
+        },
+        {
+            "Team" : "Lazio",
+            "Pts" : 0
+        },
+        {
+            "Team" : "Roma",
+            "Pts" : 0
+        }
+    ],
+    "2021-2022" : [
+        {
+            "Team" : "Milan",
+            "Pts" : 0
+        },
+        {
+            "Team" : "Napolitano",
+            "Pts" : 0
+        },
+        {
+            "Team" : "Inter",
+            "Pts" : 0
+        },
+        {
+            "Team" : "Juventus",
+            "Pts" : 0
+        },
+        {
+            "Team" : "Lazio",
+            "Pts" : 0
+        },
+        {
+            "Team" : "Roma",
+            "Pts" : 0
+        },
+        {
+            "Team" : "Atalanta",
+            "Pts" : 0
+        }
+    ]
+}

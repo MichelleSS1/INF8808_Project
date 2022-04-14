@@ -1,14 +1,14 @@
 {
-  "name": "tp3",
+  "name": "inf8808_project",
   "version": "1.0.0",
-  "description": "TP pour le cours INF8808.",
+  "description": "Projet pour le cours INF8808.",
   "main": "src/index.js",
   "scripts": {
     "build": "parcel build ./src/index.html",
     "start": "parcel ./src/index.html --log-level=2 --port=8080",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Olivia Gélinas",
+  "author": "Team **",
   "license": "UNLICENSED",
   "dependencies": {
     "d3": "^5.16.0",
