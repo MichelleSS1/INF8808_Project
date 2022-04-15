@@ -74,9 +74,17 @@ button:hover, button:active {
     align-items: center;
 }
 
-.tick line{
-    visibility: hidden;
-  }
+/* #bubble-chart1 {
+    margin: 0px;
+}
+
+#bubble-chart2 {
+    margin-left: 20px;
+}
+
+#bubble-chart3 {
+    margin-left: 20px;
+} */
 
   .info {
       pointer-events: none;
@@ -90,11 +98,15 @@ button:hover, button:active {
       transform-origin: center;
   }
 
-  .axis path {
-      opacity: 0;
-  }
+  .axis path, .axis line {
+    stroke : #362023;
+}
 
 .graph.radarchart {
+    flex-direction: column-reverse;
+}
+
+.graphbubblechart {
     flex-direction: column-reverse;
 }
 
