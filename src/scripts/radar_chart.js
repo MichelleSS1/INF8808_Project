@@ -116,6 +116,7 @@ export function drawPoints(data, element, xCenter, yCenter, scales, colour) {
 
     element.append('g')
         .attr('class', 'points')
+        .attr('id', colour)
         .selectAll('circle')
         .data(points)
         .enter()
@@ -124,7 +125,7 @@ export function drawPoints(data, element, xCenter, yCenter, scales, colour) {
         .attr('cy', function(d) { return d.y })
         .attr('r', POINT_RADIUS)
         .attr('fill', colour)
-}
+}       
 
 export function drawAxes(data, element, xCenter, yCenter) {
     var totalAxes = Object.keys(data).length - TOTAL_HEADERS_COUNT      // Ignores seasons and team name.
@@ -144,25 +145,51 @@ export function drawAxes(data, element, xCenter, yCenter) {
         .attr('stroke-width', AXE_STROKE_WIDTH + 'px')
 }
 
-export function drawAxesLabel(data, element, xCenter, yCenter) {
+export function drawAxesLabel(data, element, xCenter, yCenter, tip) {
     var stats = getStats(data)
-
     // Build array containing labels.
     var labels = Object.keys(stats)
     var totalAxes = labels.length
+    var container = element.append('g')
 
-    element.append('g')
-        .attr('class', 'labels')
+    container
         .selectAll('text')
-        .data(labels)
+        .data(data)
         .enter()
         .append('text')
+        .attr('class', 'label')
         .attr('x', function(_, i) { return xCenter * (1 - LABELS_MULTIPLIER_FACTOR * Math.sin(i * 2 * Math.PI / totalAxes)); })
         .attr('y', function(_, i) { return yCenter * (1 - LABELS_MULTIPLIER_FACTOR * Math.cos(i * 2 * Math.PI / totalAxes)); })
         .attr('text-anchor', 'middle')
+        .on("mouseover", function(d) { 
+            tip.show(d,this)
+            d3.select(this)
+            .style('font-size', 16 + 'px')
+         })
+        .on("mouseout", function() {
+            tip.hide()
+            d3.select(this).style('font-size', LABELS_FONT_SIZE + 'px')
+        })
         .style('font-size', LABELS_FONT_SIZE + 'px')
         .style('font-weight', 'bold')
-        .text(function(d) { return d; })
+        .text(function(d) {return d.label; })
+
+    var nodes = []
+    container.selectAll('.label')
+        .each(function(d) {
+            nodes.push(d3.select(this).node().getBBox())
+        })
+
+    container
+        .selectAll('rect')
+        .data(nodes)
+        .enter()
+        .insert('rect', ':first-child')
+        .attr('x', function(d) { return d.x })
+        .attr('y', function(d) { return d.y })
+        .attr('width', function(d) { return d.width })
+        .attr('height', function(d) { return d.height })
+        .attr('fill', 'white')
 }
 
 export function drawTicks(stepChoices, mins, scales, element, xCenter, yCenter) {
