@@ -9,7 +9,7 @@ import * as util from './scripts/util.js'
 
 
 /**
- * @file This file is the entry-point for the the code for TP3 for the course INF8808.
+ * @file This file is the entry-point for the the code for the project for the course INF8808.
  * @author Équipe **
  * @version v1.0.0
  */
@@ -18,24 +18,6 @@ import * as util from './scripts/util.js'
   
   let svgSize
   let graphSize
-
-  /**
-     *   This function handles the radar charts' sizing.
-     */
-   function setSizingRC(bounds, selection, margin, isRadarChart) {
-
-    svgSize = {
-      width: bounds.width,
-      height: 450
-    }
-
-    graphSize = {
-      width: svgSize.width / 3 - margin.left - margin.right,
-      height: svgSize.height - margin.bottom - margin.top
-    }
-
-    helper.setCanvasSize(selection, svgSize.width, svgSize.height)
-  }
 
   /**
    *   This function handles the graph's sizing.
@@ -56,8 +38,6 @@ import * as util from './scripts/util.js'
 
     helper.setCanvasSize(selection, svgSize.width, svgSize.height)
   }
-  
-
 
   //first viz
   d3.csv('./data_offensive.csv', d3.autoType).then(function (data) {
@@ -119,32 +99,53 @@ import * as util from './scripts/util.js'
   d3.json('./serieA_ranking.json', d3.autoType).then(function (data) {
     const marginBC = { top: 35, right: 200, bottom: 35, left: 200 }
     const bumpRadius = 13
+    const padding = 25
 
     const xScale = d3.scalePoint()
+    const bxScale = d3.scalePoint()
     const yScale = d3.scalePoint()
+    const byScale = d3.scalePoint()
 
     const chartData = preproc.getChartData(data);
     const leftTeamNames = preproc.getLeftTeamNames(data);
     const rightTeamNames = preproc.getRightTeamNames(data);
 
-    
+    const xDomain = Object.keys(data)
     const bounds = d3.select('#chart-rank').node().getBoundingClientRect();
     const selection = d3.select(".chart-rank-svg");
     
-    setSizing(bounds, selection, marginBC);
+    const mainG = helper.generateBCMainG(marginBC)
+    const centerG = helper.appendBCCenter(mainG)
+
+    helper.appendBCAxes(mainG)
+    const series = helper.appendBCTeamSeries(chartData, preproc.getLeftTeamNames(data).sort().indexOf("Juventus"))
+    
+    const width = xDomain.length * 100 + marginBC.left + marginBC.right + padding * 2;
+    const height = leftTeamNames.length * 60 + marginBC.top + marginBC.bottom + padding * 2;
+    setSizing(
+      { width: Math.min(width, bounds.width), 
+        height: Math.min(height, bounds.height)
+      }, 
+      selection, marginBC, false
+    );
     buildBumpChart();
    
     /**
      *   This function builds the graph.
      */
     function buildBumpChart() {
-      // viz.updateXScales(xScale, data, graphSize.width)
-      // viz.updateYScales(yScale, neighborhoodNames, graphSize.height)
+      const xRangeInterval = [padding, graphSize.width - padding]
+      const yRangeInterval = [padding, graphSize.height - padding]
 
-      // viz.drawXAxis(xScale)
-      // viz.drawYAxis(yScale, graphSize.width)
+      viz.updateBCXScales(xScale, bxScale, xDomain, xRangeInterval)
+      viz.updateBCYScales(yScale, byScale, leftTeamNames, yRangeInterval)
 
-      // viz.rotateXTicks()
+      viz.drawBCXAxis(xScale, graphSize.height)
+      viz.drawBCYAxis(yScale, leftTeamNames, rightTeamNames, graphSize.width)
+
+      viz.drawBCDashedLines(xDomain, bxScale, graphSize.height, padding)
+
+      viz.drawBCRankingLines(chartData, bxScale, byScale)
 
       // viz.updateRects(xScale, yScale, colorScale)
 
@@ -156,7 +157,12 @@ import * as util from './scripts/util.js'
     window.addEventListener('resize', () => {
       const bounds = d3.select('#chart-rank').node().getBoundingClientRect();
       const selection = d3.select(".chart-rank-svg");
-      setSizing(bounds, selection, marginBC)
+      const width = xDomain.length * 100 + marginBC.left + marginBC.right + padding * 2;
+      const height = leftTeamNames.length * 60 + marginBC.top + marginBC.bottom + padding * 2;
+        setSizing(
+        { width: Math.min(width, bounds.width), 
+          height: Math.min(height, bounds.height)
+        }, selection, marginBC, false)
       buildBumpChart()
     })
   }
