@@ -11,6 +11,7 @@ const SHAPE_STROKE_WIDTH = 2
 const AXE_STROKE_WIDTH = .5
 const TICK_STROKE_WIDTH = .3
 const LABELS_MULTIPLIER_FACTOR = 1.05
+const BACKGROUND_COLOR = 'white'
 
 // Constants used to move scales.
 const MAX_MULTPLIER_FACTOR = 1.2
@@ -20,6 +21,13 @@ const XGA_MULTIPLIER_FACTOR = 1.1
 // Possible steps used for viz.
 const STEP_CHOICES = [.1, .2, .5, 1, 2, 5, 10, 20, 50, 100]
 
+
+/**
+ * Reads data and sets scales for radar charts.
+ *
+ * @param { Number } stepChoice Index of the step to choose.
+ * @param { Number } minValue Value of the minimum.
+ */
 export function setScale(stepChoice, minValue) {
     var maxValue = minValue + N_STEPS * STEP_CHOICES[stepChoice]
     return d3.scaleLinear()
@@ -27,6 +35,13 @@ export function setScale(stepChoice, minValue) {
         .range([0, 1])
 }
 
+
+/**
+ * Returns the closest 'round' value of given number.
+ *
+ * @param { Number } value Given number.
+ * @param { isBefore } isBefore Boolean that indicates if it returns the closest value before or after.
+ */
 function getClosestStepToValue(value, isBefore) {
     for (var i in STEP_CHOICES) {
         if (value <= STEP_CHOICES[i])
@@ -34,6 +49,13 @@ function getClosestStepToValue(value, isBefore) {
     }
 }
 
+
+/**
+ * Reads data and computes the smallest value in the visualisation.
+ *
+ * @param { Array } data Given data.
+ * @param { String } attribute Attribute for which it computes the minimum value.
+ */
 export function getMin(data, attribute) {
     var values = []
     data.forEach(serie => {
@@ -48,6 +70,13 @@ export function getMin(data, attribute) {
     }
 }
 
+
+/**
+ * Reads data and computes the best choice for steps for the visualisation.
+ *
+ * @param { Array } data Given data.
+ * @param { String } attribute Attribute for which it computes the best choice.
+ */
 export function setSteps(data, attribute) {
     var values = []
     data.forEach(serie => {
@@ -70,13 +99,25 @@ export function setSteps(data, attribute) {
     }
 }
 
+
+/**
+ * Draws value of each tick in the visualisation.
+ * Reference for x and y attributes: http://bl.ocks.org/chrisrzhou/2421ac6541b68c1680f8
+ *
+ * @param { Array } stepChoices Choices of step value for each attribute.
+ * @param { Array } mins Minimum values of each attribute.
+ * @param { Array } scales Scaling function for each attribute.
+ * @param { SVGElement } element SVG element that contains the nodes for steps.
+ * @param { Number } xCenter X coordinate of the center of the chart.
+ * @param { Number } yCenter Y coordinate of the center of the chart.
+ */
 export function drawSteps(stepChoices, mins, scales, element, xCenter, yCenter) {
     var nCircles = [...Array(N_STEPS - 1).keys()].map(i => i + 1)
     var labels = Object.keys(mins)
     var totalAxes = labels.length
-    console.log(mins)
     var stepContainer = element.append('g')
 
+    // Adds text for each step of each category.
     nCircles.forEach(function(d) {
         labels.forEach(function(label, i) {
             var stepValue = mins[label] + d * STEP_CHOICES[stepChoices[label]].toFixed(2)
@@ -92,12 +133,14 @@ export function drawSteps(stepChoices, mins, scales, element, xCenter, yCenter) 
         })
     })
 
+    // Gets bounding boxes of each text element.
     var nodes = []
     stepContainer.selectAll('.steps')
         .each(function(d) {
             nodes.push(d3.select(this).node().getBBox())
         })
 
+    // Adds background rectangle to each text element.
     stepContainer
         .selectAll('rect')
         .data(nodes)
@@ -107,9 +150,21 @@ export function drawSteps(stepChoices, mins, scales, element, xCenter, yCenter) 
         .attr('y', function(d) { return d.y })
         .attr('width', function(d) { return d.width })
         .attr('height', function(d) { return d.height })
-        .attr('fill', 'white')
+        .attr('fill', BACKGROUND_COLOR)
 }
 
+
+/**
+ * Draws value of each tick in the visualisation.
+ * Reference for x and y attributes: http://bl.ocks.org/chrisrzhou/2421ac6541b68c1680f8
+ *
+ * @param { Array } stepChoices Choices of step value for each attribute.
+ * @param { Array } mins Minimum values of each attribute.
+ * @param { Array } scales Scaling function for each attribute.
+ * @param { SVGElement } element SVG element that contains the nodes for steps.
+ * @param { Number } xCenter X coordinate of the center of the chart.
+ * @param { Number } yCenter Y coordinate of the center of the chart.
+ */
 export function drawPoints(data, element, xCenter, yCenter, scales, colour) {
     var stats = getStats(data)
     var points = getCoordinates(stats, scales, xCenter, yCenter)
@@ -127,6 +182,16 @@ export function drawPoints(data, element, xCenter, yCenter, scales, colour) {
         .attr('fill', colour)
 }       
 
+
+/**
+ * Draws axes of each category.
+ * Reference for x and y attributes: http://bl.ocks.org/chrisrzhou/2421ac6541b68c1680f8
+ *
+ * @param { Array } data Given data. 
+ * @param { SVGElement } element SVG element that contains the nodes for steps.
+ * @param { Number } xCenter X coordinate of the center of the chart.
+ * @param { Number } yCenter Y coordinate of the center of the chart.
+ */
 export function drawAxes(data, element, xCenter, yCenter) {
     var totalAxes = Object.keys(data).length - TOTAL_HEADERS_COUNT      // Ignores seasons and team name.
     var axesData = [...Array(totalAxes).keys()]                         // Generates an array from 0 to the number of axes.
@@ -145,6 +210,16 @@ export function drawAxes(data, element, xCenter, yCenter) {
         .attr('stroke-width', AXE_STROKE_WIDTH + 'px')
 }
 
+
+/**
+ * Draws title of each axis.
+ * Reference for x and y attributes: http://bl.ocks.org/chrisrzhou/2421ac6541b68c1680f8
+ *
+ * @param { Array } data Given data. 
+ * @param { SVGElement } element SVG element that contains the nodes for steps.
+ * @param { Number } xCenter X coordinate of the center of the chart.
+ * @param { Number } yCenter Y coordinate of the center of the chart.
+ */
 export function drawAxesLabel(data, element, xCenter, yCenter, tip) {
     var stats = getStats(data)
     // Build array containing labels.
@@ -189,14 +264,25 @@ export function drawAxesLabel(data, element, xCenter, yCenter, tip) {
         .attr('y', function(d) { return d.y })
         .attr('width', function(d) { return d.width })
         .attr('height', function(d) { return d.height })
-        .attr('fill', 'white')
+        .attr('fill', BACKGROUND_COLOR)
 }
 
+
+/**
+ * Draws intermediate polygons across steps.
+ * Reference for x and y attributes: http://bl.ocks.org/chrisrzhou/2421ac6541b68c1680f8
+ *
+ * @param { Array } stepChoices Choices of step value for each attribute.
+ * @param { Array } mins Minimum values of each attribute.
+ * @param { Array } scales Scaling function for each attribute.
+ * @param { SVGElement } element SVG element that contains the nodes for steps.
+ * @param { Number } xCenter X coordinate of the center of the chart.
+ * @param { Number } yCenter Y coordinate of the center of the chart.
+ */
 export function drawTicks(stepChoices, mins, scales, element, xCenter, yCenter) {
     var nTicks = [...Array(N_STEPS - 1).keys()].map(i => i + 1)
     var labels = Object.keys(mins)
     var totalAxes = labels.length
-    console.log(mins)
 
     var ticksContainer = element.append('g')
         .attr('class', 'ticks')
@@ -219,6 +305,17 @@ export function drawTicks(stepChoices, mins, scales, element, xCenter, yCenter) 
     })
 }
 
+
+/**
+ * Draws polygon that connects points on visualisation.
+ *
+ * @param { Array } data Given data.
+ * @param { SVGElement } element SVG element that contains the nodes for steps.
+ * @param { Number } xCenter X coordinate of the center of the chart.
+ * @param { Number } yCenter Y coordinate of the center of the chart.
+ * @param { Array } scales Scaling function for each attribute.
+ * @param { String } colour Colour of the polygon.
+ */
 export function drawShape(data, element, xCenter, yCenter, scales, colour) {
     var stats = getStats(data)
     var points = getCoordinates(stats, scales, xCenter, yCenter)
@@ -236,6 +333,14 @@ export function drawShape(data, element, xCenter, yCenter, scales, colour) {
         .attr('stroke', colour)
 }
 
+
+/**
+ * Draws title of the chart.
+ *
+ * @param { Array } data Given data.
+ * @param { SVGElement } element SVG element that contains the nodes for steps.
+ * @param { Number } xCenter X coordinate of the center of the chart.
+ */
 export function drawTitle(data, element, xCenter) {
     element.append('text')
         .text(data.Season)
@@ -246,6 +351,12 @@ export function drawTitle(data, element, xCenter) {
         .style('font-size', TITLE_FONT_SIZE + 'px')
 }
 
+
+/**
+ * Returns raw stats with no team name or season.
+ *
+ * @param { Array } data Given data.
+ */
 export function getStats(data) {
     // Removes unnecessary labels.
     var stats = Object.assign({}, data)
@@ -255,6 +366,16 @@ export function getStats(data) {
     return stats
 }
 
+
+/**
+ * Converts values to coordinates.
+ * Reference for x and y attributes: http://bl.ocks.org/chrisrzhou/2421ac6541b68c1680f8
+ *
+ * @param { Array } stats Values of given data.
+ * @param { Array } scales Scaling function for each attribute.
+ * @param { Number } xCenter X coordinate of the center of the chart.
+ * @param { Number } yCenter Y coordinate of the center of the chart.
+ */
 export function getCoordinates(stats, scales, xCenter, yCenter) {
     var points = []
     var keys = Object.keys(stats)
@@ -269,6 +390,12 @@ export function getCoordinates(stats, scales, xCenter, yCenter) {
     return points
 }
 
+
+/**
+ * Removes all children nodes in container.
+ *
+ * @param { SVGElement } element SVG element containing the chart.
+ */
 export function eraseAll(element) {
     element.selectAll('*').remove()
 }
