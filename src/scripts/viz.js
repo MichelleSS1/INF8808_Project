@@ -231,13 +231,13 @@ export function updateYScales(yScale, byScale, yDomain, yRangeInterval, byRangeI
  export function positionLabels (g, width, height) {
   // TODO : Position axis labels
   g.select('text.y.axis-text')
-    .attr('x', width + 50)
-    .attr('y', height / 2)
+    .attr('x', width)
+    .attr('y', 0)
     .style('text-anchor', 'middle')
 
   g.select('text.x.axis-text')
     .attr('x', width / 2)
-    .attr('y', height + 50)
+    .attr('y', height + 35)
     .style('text-anchor', 'middle')
 }
 
@@ -289,6 +289,11 @@ export function drawDensityLine (chart, data, colorScale, result, xScale, yScale
   var salaireMax = d3.max(data, function (d) { return Math.ceil(parseFloat(d.Masse_Salariale)) })
 
   const pas = Math.round((salaireMax - salaireMin) / 15)
+
+  // point extrême inférieur
+  points.push([xScale(0), yScale((salaireMin - pas / 2))])
+
+  // les points obtenus de nos données
   var salaireInf = salaireMin
   var salaireSup = salaireInf + pas
   while (salaireSup < salaireMax) {
@@ -303,13 +308,16 @@ export function drawDensityLine (chart, data, colorScale, result, xScale, yScale
     salaireSup = salaireInf + pas
   }
 
+  // point extrême supérieur
+  points.push([xScale(0), yScale((salaireMax + pas / 2))])
+
   const curve = d3.line().curve(d3.curveNatural)
   chart.append('path')
     .attr('d', curve(points))
     .attr('stroke', colorScale(result))
     .attr('fill', 'none')
-    // .attr('transform', 'translate(' + 430 + ', 0)')
-    // .attr('transform', 'translate(' + (-50) + ', 0)')
+    .attr('transform',
+      'translate(' + 419 + ',' + 0 + ')')
 
   chart.node()
 }
@@ -324,19 +332,19 @@ export function setTitleText () {
   d3.select('#bubble-chart1')
     .select('#graph-g1')
     .select('text.title')
-    .text('Saison : 2019-2020')
+    .text('Saison 2019-2020')
     .style('text-anchor', 'middle')
 
   d3.select('#bubble-chart2')
     .select('#graph-g2')
     .select('text.title')
-    .text('Saison : 2020-2021')
+    .text('Saison 2020-2021')
     .style('text-anchor', 'middle')
 
   d3.select('#bubble-chart3')
     .select('#graph-g3')
     .select('text.title')
-    .text('Saison : 2021-2022')
+    .text('Saison 2021-2022')
     .style('text-anchor', 'middle')
 }
 

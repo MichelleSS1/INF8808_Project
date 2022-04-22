@@ -13,12 +13,7 @@
 export function setColorScale () {
   // TODO : Set scale
   var resultats = ['Victoire', 'Nul', 'Défaite']
-  // var resultats = []
-  // data.forEach((line) => {
-  //   if (!(line.Resultat in resultats)) {
-  //     resultats.push(line.Resultat)
-  //   }
-  // })
+
   return d3.scaleOrdinal(d3.schemeCategory10).domain(resultats)
 }
 
@@ -34,8 +29,8 @@ export function setXScale (width, data) {
 
   return d3.scaleLinear()
     .domain([
-      d3.min(data, function (d) { return parseInt(d.Numero_Match) }),
-      d3.max(data, function (d) { return parseInt(d.Numero_Match) + 1 })
+      0,
+      d3.max(data, function (d) { return parseInt(d.Numero_Match) + 4 })
     ])
     .range([0, width])
 }

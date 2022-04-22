@@ -61,13 +61,11 @@ import d3Tip from 'd3-tip'
 
     helper.setCanvasSize(selection, svgSize.width, svgSize.height)
   }
-  
-
 
   const tip = d3Tip().attr('class', 'd3-tip').html(function (d) { return hover.getContents(d) })
   d3.select('.chart-off-svg').call(tip)
 
-  //first viz
+  // first viz
   d3.csv('./data_offensive.csv', d3.autoType).then(function (data) {
     const marginRC1 = { top: 65, right: 35, bottom: 125, left: 35 }
 
@@ -100,7 +98,7 @@ import d3Tip from 'd3-tip'
     })
   })
 
-  //second viz
+  // second viz
   d3.csv('./data_defensive.csv', d3.autoType).then(function (data) {
     const marginRC2 = { top: 65, right: 35, bottom: 125, left: 35 }
     data = preproc.preprocessDefense(data)
@@ -183,19 +181,19 @@ import d3Tip from 'd3-tip'
 
   helper.appendAxes1(g1)
   helper.appendGraphLabels(g1, graphSizeBC.width)
-  helper.placeTitle(g1, graphSizeBC.width)
+  helper.placeTitle(g1, graphSizeBC.width, graphSizeBC.height)
 
   viz.positionLabels(g1, graphSizeBC.width, graphSizeBC.height)
 
   helper.appendAxes2(g2)
   helper.appendGraphLabels(g2, graphSizeBC.width)
-  helper.placeTitle(g2, graphSizeBC.width)
+  helper.placeTitle(g2, graphSizeBC.width, graphSizeBC.height)
 
   viz.positionLabels(g2, graphSizeBC.width, graphSizeBC.height)
 
   helper.appendAxes3(g3)
   helper.appendGraphLabels(g3, graphSizeBC.width)
-  helper.placeTitle(g3, graphSizeBC.width)
+  helper.placeTitle(g3, graphSizeBC.width, graphSizeBC.height)
 
   viz.positionLabels(g3, graphSizeBC.width, graphSizeBC.height)
 
@@ -203,9 +201,7 @@ import d3Tip from 'd3-tip'
 
   const radius = 4
 
-  // helper.drawButton(g, currentYear === 2000 ? 2015 : 2000, graphSize.width)
   const chart1 = d3.select('#bubble-chart1').select('#graph-g1')
-  // const chartDen1 = d3.select('#bubble-chart1').select('#graph-d1')
   const chart2 = d3.select('#bubble-chart2').select('#graph-g2')
   const chart3 = d3.select('#bubble-chart3').select('#graph-g3')
 
@@ -242,7 +238,7 @@ import d3Tip from 'd3-tip'
     helper.drawXAxis(axisx2, xScale, graphSizeBC.height)
     helper.drawYAxis(axisy2, yScale, graphSizeBC.width)
 
-    legend.drawLegendBC(g2, colorScale, -70, 0)
+    // legend.drawLegendBC(g2, colorScale, -70, 0)
 
     build(chart2, data, radius, colorScale, xScale, yScale)
     buildDensity(chart2, data, colorScale, 'Victoire', xScale, yScale)
@@ -258,7 +254,7 @@ import d3Tip from 'd3-tip'
     helper.drawXAxis(axisx3, xScale, graphSizeBC.height)
     helper.drawYAxis(axisy3, yScale, graphSizeBC.width)
 
-    legend.drawLegendBC(g3, colorScale, -70, 0)
+    // legend.drawLegendBC(g3, colorScale, -70, 0)
 
     build(chart3, data, radius, colorScale, xScale, yScale)
     buildDensity(chart3, data, colorScale, 'Victoire', xScale, yScale)
