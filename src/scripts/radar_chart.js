@@ -74,7 +74,6 @@ export function drawSteps(stepChoices, mins, scales, element, xCenter, yCenter) 
     var nCircles = [...Array(N_STEPS - 1).keys()].map(i => i + 1)
     var labels = Object.keys(mins)
     var totalAxes = labels.length
-    console.log(mins)
     var stepContainer = element.append('g')
 
     nCircles.forEach(function(d) {
@@ -196,7 +195,6 @@ export function drawTicks(stepChoices, mins, scales, element, xCenter, yCenter) 
     var nTicks = [...Array(N_STEPS - 1).keys()].map(i => i + 1)
     var labels = Object.keys(mins)
     var totalAxes = labels.length
-    console.log(mins)
 
     var ticksContainer = element.append('g')
         .attr('class', 'ticks')

@@ -31,7 +31,6 @@ export function drawOffensiveRadarCharts(data, element, width, height, margin, t
     var descriptions = Object.values(stats)
     var tooltips = preproc.preprocessTooltipOff(labels, descriptions)
     data = data.slice(1,data.length)
-    console.log(labels)
     labels.forEach(function(label) {
         var min = radarChart.getMin(data, label)
         mins[label] = min
@@ -91,7 +90,6 @@ export function drawDefensiveRadarChart(data, element, width, height, margin, ti
     var descriptions = Object.values(stats)
     var tooltips = preproc.preprocessTooltipDef(labels, descriptions)
     data = data.slice(1,data.length)
-    console.log(labels)
 
     labels.forEach(function(label) {
         var min = radarChart.getMin(data, label)
@@ -199,7 +197,7 @@ export function addButtons(svgElement, graphHeight, margin) {
  * @param {number} width The width of the graph
  * @param {number} height The height of the graph
  */
- export function positionLabels (g, width, height) {
+ export function positionSPLabels (g, width, height) {
   g.select('text.y.axis-text')
     .attr('x', width)
     .attr('y', 0)
@@ -223,7 +221,7 @@ export function addButtons(svgElement, graphHeight, margin) {
  * @param yScale
  * @param tip
  */
-export function drawCircles (chart, data, radius, colorScale, xScale, yScale) {
+export function drawSPCircles (chart, data, radius, colorScale, xScale, yScale) {
   // If there are no circles already, we create new circles
   if (chart.selectAll('circle').empty()) {
     chart.selectAll('dot')
@@ -247,7 +245,7 @@ export function drawCircles (chart, data, radius, colorScale, xScale, yScale) {
  * @param xScale
  * @param yScale
  */
-export function drawDensityLine (chart, data, colorScale, result, xScale, yScale) {
+export function drawSPDensityLine (chart, data, colorScale, result, xScale, yScale) {
   var points = []
   var salaireMin = d3.min(data, function (d) { return Math.floor(parseFloat(d.Masse_Salariale)) })
   var salaireMax = d3.max(data, function (d) { return Math.ceil(parseFloat(d.Masse_Salariale)) })
@@ -291,20 +289,20 @@ export function drawDensityLine (chart, data, colorScale, result, xScale, yScale
  *
  * @param {number} year The currently displayed year
  */
-export function setTitleText () {
-  d3.select('#bubble-chart1')
+export function setSPTitleText () {
+  d3.select('#chart-eff-svg1')
     .select('#graph-g1')
     .select('text.title')
     .text('Saison 2019-2020')
     .style('text-anchor', 'middle')
 
-  d3.select('#bubble-chart2')
+  d3.select('#chart-eff-svg2')
     .select('#graph-g2')
     .select('text.title')
     .text('Saison 2020-2021')
     .style('text-anchor', 'middle')
 
-  d3.select('#bubble-chart3')
+  d3.select('#chart-eff-svg3')
     .select('#graph-g3')
     .select('text.title')
     .text('Saison 2021-2022')

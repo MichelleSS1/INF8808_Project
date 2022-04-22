@@ -122,7 +122,7 @@ export function getRightTeamNames(data) {
  * @param {object} data The json loaded
  * @returns {Array[]} The ranking matrix
  */
- export function getChartData(data) {
+ export function getBumpChartData(data) {
     const teams = getLeftTeamNames(data).sort();
     const seasons = Object.keys(data);
 

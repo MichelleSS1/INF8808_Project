@@ -10,7 +10,7 @@
  * @param {object} data The data to be displayed
  * @returns {*} The ordinal scale used to determine the color
  */
-export function setColorScale () {
+export function setSPColorScale () {
   var resultats = ['Victoire', 'Nul', 'Défaite']
   return d3.scaleOrdinal(d3.schemeCategory10).domain(resultats)
 }
@@ -22,7 +22,7 @@ export function setColorScale () {
  * @param {object} data The data to be used
  * @returns {*} The linear scale in X
  */
-export function setXScale (width, data) {
+export function setSPXScale (width, data) {
   return d3.scaleLinear()
     .domain([
       0,
@@ -38,7 +38,7 @@ export function setXScale (width, data) {
  * @param {object} data The data to be used
  * @returns {*} The linear scale in Y
  */
-export function setYScale (height, data) {
+export function setSPYScale (height, data) {
   return d3.scaleLinear()
     .domain([
       d3.min(data, function (d) { return parseFloat(d.Masse_Salariale) }),

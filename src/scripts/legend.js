@@ -6,7 +6,7 @@ import d3Legend from 'd3-svg-legend'
  * @param {*} colorScale The color scale used for the legend
  * @param {*} g The d3 Selection of the SVG g elemnt containing the legend
  */
-export function drawLegend (colorScale, g, height, margin) {
+export function drawRCLegend (colorScale, g, height, margin) {
   var legend = d3Legend
     .legendColor()
     .labelFormat(d3.format('.2f'))
@@ -31,7 +31,7 @@ export function drawLegend (colorScale, g, height, margin) {
  * @param {number} positionx the x position on the graph used to place the legend
  * @param {number} positiony the y position on the graph used to place the legend
  */
- export function drawLegendBC (g, colorScale, positionx, positiony) {
+ export function drawSPLegend (g, colorScale, positionx, positiony) {
   // For help, see : https://d3-legend.susielu.com/
 
   g.append('g')
