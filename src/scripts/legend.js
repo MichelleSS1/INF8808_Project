@@ -36,7 +36,7 @@ export function drawRCLegend (colorScale, g, height, margin) {
 
   g.append('g')
     .attr('class', 'legendOrdinal')
-    .attr('transform', 'translate(' + positionx + ',' + positiony + ')')
+    .attr('transform', 'translate(' + positionx+ ',' + positiony + ')')
     .append('text')
     .attr('class', 'legend-title')
 
