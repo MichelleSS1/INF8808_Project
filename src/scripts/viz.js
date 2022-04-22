@@ -199,7 +199,7 @@ export function addButtons(svgElement, graphHeight, margin) {
  */
  export function positionSPLabels (g, width, height) {
   g.select('text.y.axis-text')
-    .attr('x', width)
+    .attr('x', width-25)
     .attr('y', 0)
     .style('text-anchor', 'middle')
 
@@ -279,7 +279,7 @@ export function drawSPDensityLine (chart, data, colorScale, result, xScale, ySca
     .attr('stroke', colorScale(result))
     .attr('fill', 'none')
     .attr('transform',
-      'translate(' + 419 + ',' + 0 + ')')
+      'translate(' + 345 + ',' + 0 + ')')
 
   chart.node()
 }

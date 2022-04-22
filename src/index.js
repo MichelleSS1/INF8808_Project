@@ -23,8 +23,8 @@ import d3Tip from 'd3-tip'
   const MIN_RC_HEIGHT = 450
   const MIN_RC_WIDTH = 800
 
-  const MIN_SP_HEIGHT = 400
-  const MIN_SP_WIDTH = 650
+  const MIN_SP_HEIGHT =400
+  const MIN_SP_WIDTH = 481
 
   /**
    *   This function handles the graph's sizing.
@@ -196,9 +196,9 @@ import d3Tip from 'd3-tip'
   /*********** AFFICHAGE SCATTER PLOT***********/
   const marginSP = {
     top: 40,
-    right: 150,
+    right: 70,
     bottom: 75,
-    left: 85
+    left: 70
   }
 
   const radius = 4
@@ -233,7 +233,7 @@ import d3Tip from 'd3-tip'
     helper.drawSPXAxis(axisx1, xScale, graphSize.height)
     helper.drawSPYAxis(axisy1, yScale, graphSize.width)
 
-    legend.drawSPLegend(g1, colorScale, -70, 0)
+    legend.drawSPLegend(g1, colorScale, -65, 0 )
 
     buildScatterPlot(chart1, data, radius, colorScale, xScale, yScale)
     buildDensity(chart1, data, colorScale, 'Victoire', xScale, yScale)
