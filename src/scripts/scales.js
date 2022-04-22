@@ -25,8 +25,8 @@ export function setColorScale () {
 export function setXScale (width, data) {
   return d3.scaleLinear()
     .domain([
-      d3.min(data, function (d) { return parseInt(d.Numero_Match) }),
-      d3.max(data, function (d) { return parseInt(d.Numero_Match) + 1 })
+      0,
+      d3.max(data, function (d) { return parseInt(d.Numero_Match) + 4 })
     ])
     .range([0, width])
 }

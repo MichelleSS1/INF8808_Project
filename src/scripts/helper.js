@@ -106,7 +106,13 @@ export function appendBCTeamSeries(chartData, juveIdx) {
     .attr('height', height)
 }
 
-export function generateG1 (margin) {
+/**
+ * Generates the SVG element g which will contain the data visualisation.
+ *
+ * @param {object} margin The desired margins around the graph
+ * @returns {*} The d3 Selection for the created g element
+ */
+ export function generateG1 (margin) {
   return d3.select('.graphbubblechart')
     .select('#bubble-chart1')
     .append('g')
@@ -183,14 +189,13 @@ export function appendAxes3 (g) {
  */
 export function appendGraphLabels (g, width) {
   g.append('text')
-    .attr('transform', 'translate(' + width + ',' + 500 + ')')
-    .attr('transform', 'rotate(90)')
     .text('Masse salariale (millions deuros)')
     .attr('class', 'y axis-text')
+    .attr('transform', 'translate(' + 0 + ',' + -15 + ')')
     .attr('font-size', 12)
-
+    
   g.append('text')
-    .text('id de match')
+    .text('id de matchs')
     .attr('class', 'x axis-text')
     .attr('font-size', 12)
 }
@@ -217,7 +222,7 @@ export function drawXAxis (axis, xScale, height) {
  */
 export function drawYAxis (axis, yScale, width) {
   axis.attr('transform', 'translate(' + width + ', 0)')
-    .call(d3.axisRight(yScale).tickSizeOuter(0).tickArguments([15, '~s']))
+    .call(d3.axisLeft(yScale).tickSizeOuter(0).tickArguments([8, '~s']))
 }
 
 /**
@@ -226,11 +231,11 @@ export function drawYAxis (axis, yScale, width) {
  * @param {*} g The d3 Selection of the graph's g SVG element
  * @param width
  */
-export function placeTitle (g, width) {
+export function placeTitle (g, width, height) {
   g.append('text')
     .attr('class', 'title')
     .attr('x', width / 2)
-    .attr('y', -20)
-    .attr('font-size', 14)
+    .attr('y', height + 60)
+    .attr('font-size', 16)
 }
 
