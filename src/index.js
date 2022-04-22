@@ -3,9 +3,9 @@
 import * as helper from './scripts/helper.js'
 import * as preproc from './scripts/preprocess.js'
 import * as viz from './scripts/viz.js'
+import * as scales from './scripts/scales.js'
 import * as legend from './scripts/legend.js'
 import * as hover from './scripts/hover.js'
-import * as util from './scripts/util.js'
 
 import d3Tip from 'd3-tip'
 
@@ -190,8 +190,150 @@ import d3Tip from 'd3-tip'
         }, selection, marginBC, false)
       buildBumpChart()
     })
+  })
+
+  /*********** AFFICHAGE BUBBLE CHART***********/
+  const marginBC = {
+    top: 40,
+    right: 150,
+    bottom: 75,
+    left: 85
   }
-  
-  
-  )
+
+  let svgSizeBC, graphSizeBC
+
+  setSizingBC()
+
+  const g1 = helper.generateG1(marginBC)
+  const g2 = helper.generateG2(marginBC)
+  const g3 = helper.generateG3(marginBC)
+
+  helper.appendAxes1(g1)
+  helper.appendGraphLabels(g1, graphSizeBC.width)
+  helper.placeTitle(g1, graphSizeBC.width)
+
+  viz.positionLabels(g1, graphSizeBC.width, graphSizeBC.height)
+
+  helper.appendAxes2(g2)
+  helper.appendGraphLabels(g2, graphSizeBC.width)
+  helper.placeTitle(g2, graphSizeBC.width)
+
+  viz.positionLabels(g2, graphSizeBC.width, graphSizeBC.height)
+
+  helper.appendAxes3(g3)
+  helper.appendGraphLabels(g3, graphSizeBC.width)
+  helper.placeTitle(g3, graphSizeBC.width)
+
+  viz.positionLabels(g3, graphSizeBC.width, graphSizeBC.height)
+
+  viz.setTitleText()
+
+  const radius = 4
+
+  // helper.drawButton(g, currentYear === 2000 ? 2015 : 2000, graphSize.width)
+  const chart1 = d3.select('#bubble-chart1').select('#graph-g1')
+  // const chartDen1 = d3.select('#bubble-chart1').select('#graph-d1')
+  const chart2 = d3.select('#bubble-chart2').select('#graph-g2')
+  const chart3 = d3.select('#bubble-chart3').select('#graph-g3')
+
+  const axisx1 = d3.select('.x1.axis')
+  const axisy1 = d3.select('.y1.axis')
+
+  const axisx2 = d3.select('.x2.axis')
+  const axisy2 = d3.select('.y2.axis')
+
+  const axisx3 = d3.select('.x3.axis')
+  const axisy3 = d3.select('.y3.axis')
+
+  d3.csv('./totalSalaries2019.csv').then((data) => {
+    const colorScale = scales.setColorScale()
+    const xScale = scales.setXScale(graphSizeBC.width, data)
+    const yScale = scales.setYScale(graphSizeBC.height, data)
+
+    helper.drawXAxis(axisx1, xScale, graphSizeBC.height)
+    helper.drawYAxis(axisy1, yScale, graphSizeBC.width)
+
+    legend.drawLegendBC(g1, colorScale, -70, 0)
+
+    build(chart1, data, radius, colorScale, xScale, yScale)
+    buildDensity(chart1, data, colorScale, 'Victoire', xScale, yScale)
+    buildDensity(chart1, data, colorScale, 'Nul', xScale, yScale)
+    buildDensity(chart1, data, colorScale, 'Défaite', xScale, yScale)
+  })
+
+  d3.csv('./totalSalaries2020.csv').then((data) => {
+    const colorScale = scales.setColorScale()
+    const xScale = scales.setXScale(graphSizeBC.width, data)
+    const yScale = scales.setYScale(graphSizeBC.height, data)
+
+    helper.drawXAxis(axisx2, xScale, graphSizeBC.height)
+    helper.drawYAxis(axisy2, yScale, graphSizeBC.width)
+
+    legend.drawLegendBC(g2, colorScale, -70, 0)
+
+    build(chart2, data, radius, colorScale, xScale, yScale)
+    buildDensity(chart2, data, colorScale, 'Victoire', xScale, yScale)
+    buildDensity(chart2, data, colorScale, 'Nul', xScale, yScale)
+    buildDensity(chart2, data, colorScale, 'Défaite', xScale, yScale)
+  })
+
+  d3.csv('./totalSalaries2021.csv').then((data) => {
+    const colorScale = scales.setColorScale()
+    const xScale = scales.setXScale(graphSizeBC.width, data)
+    const yScale = scales.setYScale(graphSizeBC.height, data)
+
+    helper.drawXAxis(axisx3, xScale, graphSizeBC.height)
+    helper.drawYAxis(axisy3, yScale, graphSizeBC.width)
+
+    legend.drawLegendBC(g3, colorScale, -70, 0)
+
+    build(chart3, data, radius, colorScale, xScale, yScale)
+    buildDensity(chart3, data, colorScale, 'Victoire', xScale, yScale)
+    buildDensity(chart3, data, colorScale, 'Nul', xScale, yScale)
+    buildDensity(chart3, data, colorScale, 'Défaite', xScale, yScale)
+  })
+
+  /**
+   *   This function handles the graph's sizing.
+   */
+  function setSizingBC () {
+    svgSizeBC = {
+      width: 650,
+      height: 400
+    }
+
+    graphSizeBC = {
+      width: svgSizeBC.width - marginBC.right - marginBC.left,
+      height: svgSizeBC.height - marginBC.bottom - marginBC.top
+    }
+
+    helper.setCanvasSizeBC(svgSizeBC.width, svgSizeBC.height)
+  }
+
+  /**
+   * This function builds the graph.
+   *
+   * @param chart
+   * @param {object} data The data to be used
+   * @param {number} transitionDuration The duration of the transition while placing the circles
+   * @param width
+   * @param radius
+   * @param {*} colorScale The scale for the circles' color
+   * @param {*} xScale The x scale for the graph
+   * @param {*} yScale The y scale for the graph
+   */
+  function build (chart, data, radius, colorScale, xScale, yScale) {
+    viz.drawCircles(chart, data, radius, colorScale, xScale, yScale)
+  }
+
+  /**
+   * @param chart
+   * @param data
+   * @param colorScale
+   * @param xScaleDensity
+   * @param yScaleDensity
+   */
+  function buildDensity (chart, data, colorScale, result, xScaleDensity, yScaleDensity) {
+    viz.drawDensityLine(chart, data, colorScale, result, xScaleDensity, yScaleDensity)
+  }
 })(d3)
