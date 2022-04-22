@@ -74,17 +74,17 @@ button:hover, button:active {
     align-items: center;
 }
 
-/* #bubble-chart1 {
-    margin: 0px;
+#chart-eff-svg1 {
+    display: inline-block;
 }
 
-#bubble-chart2 {
-    margin-left: 20px;
+#chart-eff-svg2 {
+    display: inline-block;
 }
 
-#bubble-chart3 {
-    margin-left: 20px;
-} */
+#chart-eff-svg3 {
+    display: inline-block;
+}
 
   .info {
       pointer-events: none;
@@ -106,8 +106,9 @@ button:hover, button:active {
     flex-direction: column-reverse;
 }
 
-.graphbubblechart {
-    flex-direction: column-reverse;
+.graph.scatterplot {
+    white-space: nowrap;
+    flex-direction: row;
 }
 
 .first-rank {
