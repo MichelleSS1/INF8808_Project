@@ -118,7 +118,6 @@ export function getRightTeamNames(data) {
     return rightTeamNames;
 }
 
-
 /**
  * @param {object} data The json loaded
  * @returns {Array[]} The ranking matrix
@@ -128,12 +127,10 @@ export function getRightTeamNames(data) {
     const seasons = Object.keys(data);
 
     const teamsIdx = new Map(teams.map((team, i) => [team, i]));
-    console.log("ti ", teamsIdx)
     const seasonsIdx = new Map(seasons.map((season, i) => [season, i]));  
     
     // Initialize the ranking matrix
     const matrix = Array.from(teamsIdx, () => new Array(seasons.length).fill(null));  
-    console.log("matrix0 ", matrix)
     
     for (const [season, rankings] of Object.entries(data).reverse()) {
         rankings.forEach((ranking, idx) => {
@@ -143,11 +140,15 @@ export function getRightTeamNames(data) {
             if (seasonIdx !== seasons.length - 1)
                 next = matrix[teamIdx][seasonIdx + 1];
 
-            matrix[teamIdx][seasonIdx] = {rank: idx + 1, pts: ranking.Pts, next: next};
+            matrix[teamIdx][seasonIdx] = {
+                season: season,
+                team: ranking.Team, 
+                rank: idx + 1, 
+                pts: ranking.Pts, 
+                next: next};
         })
     }
     
-    console.log("matrix ", matrix)
     return matrix;
       
 }

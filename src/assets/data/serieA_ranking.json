@@ -2,61 +2,61 @@
     "2019-2020" : [
         {
             "Team" : "Juventus",
-            "Pts" : 0
+            "Pts" : 83
         },
         {
             "Team" : "Inter",
-            "Pts" : 0
+            "Pts" : 82
         },
         {
             "Team" : "Atalanta",
-            "Pts" : 0
+            "Pts" : 78
         },
         {
             "Team" : "Lazio",
-            "Pts" : 0
+            "Pts" : 78
         },
         {
             "Team" : "Roma",
-            "Pts" : 0
+            "Pts" : 70
         },
         {
             "Team" : "Milan",
-            "Pts" : 0
+            "Pts" : 66
         },
         {
-            "Team" : "Napolitano",
-            "Pts" : 0
+            "Team" : "Napoli",
+            "Pts" : 62
         }
     ],
     "2020-2021" : [
         {
             "Team" : "Inter",
-            "Pts" : 0
+            "Pts" : 91
         },
         {
             "Team" : "Milan",
-            "Pts" : 0
+            "Pts" : 79
         },
         {
             "Team" : "Atalanta",
-            "Pts" : 0
+            "Pts" : 78
         },
         {
             "Team" : "Juventus",
-            "Pts" : 0
+            "Pts" : 78
         },
         {
-            "Team" : "Napolitano",
-            "Pts" : 0
+            "Team" : "Napoli",
+            "Pts" : 77
         },
         {
             "Team" : "Lazio",
-            "Pts" : 0
+            "Pts" : 68
         },
         {
             "Team" : "Roma",
-            "Pts" : 0
+            "Pts" : 62
         }
     ],
     "2021-2022" : [
@@ -65,7 +65,7 @@
             "Pts" : 0
         },
         {
-            "Team" : "Napolitano",
+            "Team" : "Napoli",
             "Pts" : 0
         },
         {

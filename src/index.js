@@ -34,7 +34,7 @@ import d3Tip from 'd3-tip'
     }
     
     const width = isRadarChart ? svgSize.width / 3 : svgSize.width
-    const height = isRadarChart ? svgSize.height - 100 : svgSize.width
+    const height = isRadarChart ? svgSize.height - 100 : svgSize.height
 
     graphSize = {
       width: width - margin.right - margin.left,
@@ -52,7 +52,6 @@ import d3Tip from 'd3-tip'
     const marginRC1 = { top: 65, right: 35, bottom: 125, left: 35 }
 
     data = preproc.preprocessOffense(data)
-    console.log(data)
     
     const bounds = d3.select('#chart-off').node().getBoundingClientRect();
     const selection = d3.select(".chart-off-svg");
@@ -134,6 +133,7 @@ import d3Tip from 'd3-tip'
     const chartData = preproc.getChartData(data);
     const leftTeamNames = preproc.getLeftTeamNames(data);
     const rightTeamNames = preproc.getRightTeamNames(data);
+    const teamNames = preproc.getLeftTeamNames(data).sort();
 
     const xDomain = Object.keys(data)
     const bounds = d3.select('#chart-rank').node().getBoundingClientRect();
@@ -143,13 +143,12 @@ import d3Tip from 'd3-tip'
     const centerG = helper.appendBCCenter(mainG)
 
     helper.appendBCAxes(mainG)
-    const series = helper.appendBCTeamSeries(chartData, preproc.getLeftTeamNames(data).sort().indexOf("Juventus"))
     
-    const width = xDomain.length * 100 + marginBC.left + marginBC.right + padding * 2;
+    const width = xDomain.length * 60 + marginBC.left + marginBC.right + padding * 2;
     const height = leftTeamNames.length * 60 + marginBC.top + marginBC.bottom + padding * 2;
     setSizing(
-      { width: Math.min(width, bounds.width), 
-        height: Math.min(height, bounds.height)
+      { width: Math.max(width, bounds.width * 0.8), 
+        height: Math.max(height, bounds.height)
       }, 
       selection, marginBC, false
     );
@@ -170,13 +169,12 @@ import d3Tip from 'd3-tip'
 
       viz.drawBCDashedLines(xDomain, bxScale, graphSize.height, padding)
 
-      viz.drawBCRankingLines(chartData, bxScale, byScale)
+      helper.appendBCTeamSeries(chartData, teamNames.indexOf("Juventus"))
 
-      // viz.updateRects(xScale, yScale, colorScale)
+      viz.drawBCRankingLines(bxScale, byScale)
 
-      // hover.setRectHandler(xScale, yScale, hover.rectSelected, hover.rectUnselected, hover.selectTicks, hover.unselectTicks)
+      viz.drawBCBumpNumber(bxScale, byScale, bumpRadius)
 
-      // legend.draw(margin.left / 2, margin.top + 5, graphSize.height - 10, 15, 'url(#gradient)', colorScale)
     }
 
     window.addEventListener('resize', () => {
@@ -185,14 +183,14 @@ import d3Tip from 'd3-tip'
       const width = xDomain.length * 100 + marginBC.left + marginBC.right + padding * 2;
       const height = leftTeamNames.length * 60 + marginBC.top + marginBC.bottom + padding * 2;
         setSizing(
-        { width: Math.min(width, bounds.width), 
-          height: Math.min(height, bounds.height)
+        { width: Math.max(width, bounds.width * 0.8), 
+          height: Math.max(height, bounds.height)
         }, selection, marginBC, false)
       buildBumpChart()
     })
   })
 
-  /*********** AFFICHAGE BUBBLE CHART***********/
+  /*********** AFFICHAGE SCATTER PLOT***********/
   const marginBC = {
     top: 40,
     right: 150,

@@ -11,14 +11,7 @@
  * @returns {*} The ordinal scale used to determine the color
  */
 export function setColorScale () {
-  // TODO : Set scale
   var resultats = ['Victoire', 'Nul', 'Défaite']
-  // var resultats = []
-  // data.forEach((line) => {
-  //   if (!(line.Resultat in resultats)) {
-  //     resultats.push(line.Resultat)
-  //   }
-  // })
   return d3.scaleOrdinal(d3.schemeCategory10).domain(resultats)
 }
 
@@ -30,8 +23,6 @@ export function setColorScale () {
  * @returns {*} The linear scale in X
  */
 export function setXScale (width, data) {
-  // TODO : Set scale
-
   return d3.scaleLinear()
     .domain([
       d3.min(data, function (d) { return parseInt(d.Numero_Match) }),
@@ -48,7 +39,6 @@ export function setXScale (width, data) {
  * @returns {*} The linear scale in Y
  */
 export function setYScale (height, data) {
-  // TODO : Set scale
   return d3.scaleLinear()
     .domain([
       d3.min(data, function (d) { return parseFloat(d.Masse_Salariale) }),

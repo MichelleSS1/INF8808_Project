@@ -1,3 +1,15 @@
+/**
+ * Sets the size of the SVG canvas containing the graph.
+ *
+ * @param {Object} selection The d3 selection for which to set size
+ * @param {number} width The desired width
+ * @param {number} height The desired height
+ */
+ export function setCanvasSize (selection, width, height) {
+  selection.attr('width', width)
+    .attr('height', height)
+}
+
 /********************************* V4 - BUMP CHART *******************************/
 /**
  * Generates the SVG element g which will contain the data visualisation.
@@ -24,27 +36,6 @@
     .attr('id', 'bc-center');
 }
 
-
-/**
- * Sets the size of the SVG canvas containing the graph.
- *
- * @param {number} width The desired width
- * @param {number} height The desired height
- */
- export function setCanvasSizeBC (width, height) {
-  d3.select('#bubble-chart1')
-    .attr('width', width)
-    .attr('height', height)
-
-  d3.select('#bubble-chart2')
-    .attr('width', width)
-    .attr('height', height)
-
-  d3.select('#bubble-chart3')
-    .attr('width', width)
-    .attr('height', height)
-}
-
 /**
  * Appends an SVG g element which will contain the axes.
  *
@@ -62,26 +53,17 @@
 }
 
 export function appendBCTeamSeries(chartData, juveIdx) {
-  return d3.select("#bc-center")
+  d3.select("#bc-center")
     .selectAll(".series")
     .data(chartData)
     .enter()
     .append("g")
     .attr("class", (d,i) => i == juveIdx ? "series juve" : "series")
+    .transition()
+    .duration(1000)
     .attr("opacity", 1)
     .attr("fill", function(d, i) { return i == juveIdx ? "gold" : "gray"})
     .attr("stroke", function(d, i) { return i == juveIdx ? "gold" : "gray"})
-}
-
-export function appendBCBumps() {
-  return d3.selectAll("series")
-    .selectAll("g")
-    .data((d, i) => d.map(v => ({team: teams[i], rank: v.rank, pts: v.pts, first: d[0].rank})))
-    .enter()
-    .append("g")
-    .attr("class", "bump")
-    .attr("transform", (d, i) => `translate(${bx(i)},${by(d.rank)})`)
-    .call(g => g.append("title").text((d, i) => `${d.team} - ${seasons[i]}\n${d.pts}`)); 
 }
 
 
@@ -107,15 +89,22 @@ export function appendBCBumps() {
 /**
  * Sets the size of the SVG canvas containing the graph.
  *
- * @param {Object} selection The d3 selection for which to set size
  * @param {number} width The desired width
  * @param {number} height The desired height
  */
-export function setCanvasSize (selection, width, height) {
-  selection.attr('width', width)
+ export function setCanvasSizeBC (width, height) {
+  d3.select('#bubble-chart1')
+    .attr('width', width)
+    .attr('height', height)
+
+  d3.select('#bubble-chart2')
+    .attr('width', width)
+    .attr('height', height)
+
+  d3.select('#bubble-chart3')
+    .attr('width', width)
     .attr('height', height)
 }
-
 
 export function generateG1 (margin) {
   return d3.select('.graphbubblechart')

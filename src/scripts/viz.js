@@ -132,6 +132,7 @@ export function drawDefensiveRadarChart(data, element, width, height, margin, ti
  * @param { SVGElement } svgElement The SVG element where the radar chart will be built.
  */
 export function addButtons(svgElement, graphHeight, margin) {
+    var toggled = false;
     // Create button for the Juventus radar chart
     var rectBlue = svgElement.append('g')
     rectBlue.append('rect')
@@ -149,10 +150,12 @@ export function addButtons(svgElement, graphHeight, margin) {
     .on('click', function() {
       if(svgElement.selectAll('#blue').style('opacity') == 0.15) {
         svgElement.selectAll('#blue')
-        .style('opacity', 1)
-      }else {
+        .style('opacity', 1);
+        toggled = false;
+      }else if(!toggled) {
         svgElement.selectAll('#blue')
-        .style('opacity', 0.15)
+        .style('opacity', 0.15);
+        toggled = true;
       }
 
     })
@@ -175,10 +178,12 @@ export function addButtons(svgElement, graphHeight, margin) {
     .on('click', function() {
       if(svgElement.selectAll('#orange').style('opacity') == 0.15) {
         svgElement.selectAll('#orange')
-        .style('opacity', 1)
-      }else {
+        .style('opacity', 1);
+        toggled = false;
+      }else if(!toggled) {
         svgElement.selectAll('#orange')
-        .style('opacity', 0.15)
+        .style('opacity', 0.15);
+        toggled = true;
       }
 
     })
@@ -195,7 +200,6 @@ export function addButtons(svgElement, graphHeight, margin) {
  * @param {number} height The height of the graph
  */
  export function positionLabels (g, width, height) {
-  // TODO : Position axis labels
   g.select('text.y.axis-text')
     .attr('x', width + 50)
     .attr('y', height / 2)
@@ -220,12 +224,6 @@ export function addButtons(svgElement, graphHeight, margin) {
  * @param tip
  */
 export function drawCircles (chart, data, radius, colorScale, xScale, yScale) {
-  // TODO : Draw the bubble chart's circles
-  // Each circle's size depends on its population
-  // and each circle's color depends on its continent.
-  // The fill opacity of each circle is 70%
-  // The outline of the circles is white
-
   // If there are no circles already, we create new circles
   if (chart.selectAll('circle').empty()) {
     chart.selectAll('dot')
@@ -274,9 +272,6 @@ export function drawDensityLine (chart, data, colorScale, result, xScale, yScale
     .attr('d', curve(points))
     .attr('stroke', colorScale(result))
     .attr('fill', 'none')
-    // .attr('transform', 'translate(' + 430 + ', 0)')
-    // .attr('transform', 'translate(' + (-50) + ', 0)')
-
   chart.node()
 }
 
@@ -286,7 +281,6 @@ export function drawDensityLine (chart, data, colorScale, result, xScale, yScale
  * @param {number} year The currently displayed year
  */
 export function setTitleText () {
-  // TODO : Set the title
   d3.select('#bubble-chart1')
     .select('#graph-g1')
     .select('text.title')
@@ -338,7 +332,7 @@ export function setTitleText () {
 export function updateBCYScales(yScale, byScale, yDomain, yRangeInterval) {
   yScale.rangeRound(yRangeInterval);
   
-  byScale.domain(range(0, yDomain.length))
+  byScale.domain(range(1, yDomain.length + 1))
   .rangeRound(yRangeInterval); 
 }
   
@@ -364,54 +358,24 @@ export function updateBCYScales(yScale, byScale, yDomain, yRangeInterval) {
  * @param {number} width The width of the graphic
  */
 export function drawBCYAxis (yScale, leftdomain, rightDoamin, width) {
-  var yAxis = d3.axisLeft()
+  var yLeftAxis = d3.axisLeft()
     .scale(yScale.domain(leftdomain));
   d3.select(".y.left-axis")
-    .call(yAxis)
+    .call(yLeftAxis)
     .selectAll(".tick text")
     .attr("font-size", "15px");
     
-  yAxis = d3.axisRight()
+  var yRightAxis = d3.axisRight()
     .scale(yScale.domain(rightDoamin));
   d3.select(".y.right-axis")
     .attr("transform", "translate(" + width + ",0)")
-    .call(yAxis)
+    .call(yRightAxis)
     .selectAll(".tick text")
     .attr("font-size", "15px");
 
   d3.select(".y.left-axis").select(".domain").remove();
   d3.select(".y.right-axis").select(".domain").remove();
 }
-
-
-// function highlight(e, d) {       
-//   this.parentNode.appendChild(this);
-//   series.filter(s => s !== d)
-//     .transition().duration(500)
-//     .attr("fill", "#ddd").attr("stroke", "#ddd");
-//   markTick(leftY, 0);
-//   markTick(rightY,  quarters.length - 1);
-  
-//   function markTick(axis, pos) {
-//     axis.selectAll(".tick text").filter((s, i) => i === d[pos].rank)
-//       .transition().duration(500)
-//       .attr("font-weight", "bold")
-//       .attr("fill", color(d[0].rank));
-//   }
-// }
-
-// function restore(selection) {
-//   selection.transition().duration(500)
-//     .attr("fill", s => color(s[0].rank)).attr("stroke", s => color(s[0].rank));    
-//   restoreTicks(leftY);
-//   restoreTicks(rightY);
-  
-//   function restoreTicks(axis) {
-//     axis.selectAll(".tick text")
-//       .transition().duration(500)
-//       .attr("font-weight", "normal").attr("fill", "black");
-//   }
-// }
 
 /**
  * Draws dashed lines on top of the seasons
@@ -433,7 +397,13 @@ export function drawBCDashedLines(seasons, bxScale, height, padding) {
     .attr("d", d => d3.line()([[bxScale(d), padding/2], [bxScale(d), height - padding/2]]));
 }
 
-export function drawBCRankingLines(chartData, bxScale, byScale) {
+/**
+ * Draws dashed lines on top of the seasons
+ * 
+ * @param {*} bxScale The scale for the center of the bumpchart
+ * @param {*} byScale The scale for the y pos in the bumpchart
+ */
+ export function drawBCRankingLines(bxScale, byScale) {
   d3.selectAll(".series")
     .selectAll(".ranking-line")
     .data(d => d)
@@ -442,9 +412,37 @@ export function drawBCRankingLines(chartData, bxScale, byScale) {
     .attr('class', 'ranking-line')
     .attr("stroke-width", "5")
     .attr("d", (d, i) => { 
-      console.log(d)
       if (d.next) 
         return d3.line()([[bxScale(i), byScale(d.rank)], [bxScale(i + 1), byScale(d.next.rank)]]);
     });
 }
 
+/**
+ * Draws dashed lines on top of the seasons
+ * 
+ * @param {*} bxScale The scale for the center of the bumpchart
+ * @param {*} byScale The scale for the y pos in the bumpchart
+ * @param {*} bumpRadius the radius of bumps
+ */
+ export function drawBCBumpNumber(bxScale, byScale, bumpRadius){
+  const bumps = d3.selectAll(".series")
+    .selectAll("g")
+    .data(d => d)
+    .enter()
+    .append("g")
+    .attr("class", "bump")
+    .attr("transform", (d, i) => `translate(${bxScale(i)},${byScale(d.rank)})`)
+    .call(g => g.append("title").text((d, i) => `${d.team} - ${d.season}\nPoints: ${d.pts == 0 ? "check for updates" : d.pts}`)); 
+
+  bumps.append("circle")
+    .attr("r", bumpRadius);
+
+  bumps.append("text")
+    .attr("dy", "0.35em")
+    .attr("fill", "white")
+    .attr("stroke", "none")
+    .attr("text-anchor", "middle")    
+    .style("font-weight", "bold")
+    .style("font-size", "14px")
+    .text(d => d.rank);
+}
