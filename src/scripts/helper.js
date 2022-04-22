@@ -59,8 +59,19 @@ export function appendBCTeamSeries(chartData, juveIdx) {
     .data(chartData)
     .enter()
     .append("g")
-    .attr("class", "series")
+    .attr("class", (d,i) => i == juveIdx ? "series juve" : "series")
     .attr("opacity", 1)
     .attr("fill", function(d, i) { return i == juveIdx ? "gold" : "gray"})
     .attr("stroke", function(d, i) { return i == juveIdx ? "gold" : "gray"})
+}
+
+export function appendBCBumps() {
+  return d3.selectAll("series")
+    .selectAll("g")
+    .data((d, i) => d.map(v => ({team: teams[i], rank: v.rank, pts: v.pts, first: d[0].rank})))
+    .enter()
+    .append("g")
+    .attr("class", "bump")
+    .attr("transform", (d, i) => `translate(${bx(i)},${by(d.rank)})`)
+    .call(g => g.append("title").text((d, i) => `${d.team} - ${seasons[i]}\n${d.pts}`)); 
 }

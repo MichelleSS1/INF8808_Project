@@ -7,7 +7,6 @@ import * as legend from './scripts/legend.js'
 import * as hover from './scripts/hover.js'
 import * as util from './scripts/util.js'
 
-import * as d3Chromatic from 'd3-scale-chromatic'
 import d3Tip from 'd3-tip'
 
 /**
@@ -58,7 +57,9 @@ import d3Tip from 'd3-tip'
     const bounds = d3.select('#chart-off').node().getBoundingClientRect();
     const selection = d3.select(".chart-off-svg");
     
-    setSizingRC({width: Math.max(MIN_CHART_WIDTH, bounds.width * 0.8), height: Math.max(MIN_CHART_HEIGHT, bounds.height)}, selection, marginRC1)
+    setSizing(
+      {width: Math.max(MIN_CHART_WIDTH, bounds.width * 0.8), height: Math.max(MIN_CHART_HEIGHT, bounds.height)}, 
+      selection, marginRC1, true)
     buildRadarChart1()
 
     /**
@@ -76,7 +77,9 @@ import d3Tip from 'd3-tip'
     window.addEventListener('resize', () => {
       const bounds = d3.select('#chart-off').node().getBoundingClientRect();
       const selection = d3.select(".chart-off-svg");
-      setSizingRC({width: Math.max(MIN_CHART_WIDTH, bounds.width * 0.8), height: Math.max(MIN_CHART_HEIGHT, bounds.height)}, selection, marginRC1)
+      setSizing(
+        {width: Math.max(MIN_CHART_WIDTH, bounds.width * 0.8), height: Math.max(MIN_CHART_HEIGHT, bounds.height)}, 
+        selection, marginRC1, true)
       buildRadarChart1()
     })
   })
@@ -89,7 +92,9 @@ import d3Tip from 'd3-tip'
     const bounds = d3.select('#chart-def').node().getBoundingClientRect();
     const selection = d3.select(".chart-def-svg");
 
-    setSizingRC({width: Math.max(MIN_CHART_WIDTH, bounds.width * 0.8), height: Math.max(MIN_CHART_HEIGHT, bounds.height)}, selection, marginRC2)
+    setSizing(
+      {width: Math.max(MIN_CHART_WIDTH, bounds.width * 0.8), height: Math.max(MIN_CHART_HEIGHT, bounds.height)}, 
+      selection, marginRC2, true)
     buildRadarChart2()
 
     /**
@@ -108,7 +113,9 @@ import d3Tip from 'd3-tip'
     window.addEventListener('resize', () => {
       const bounds = d3.select('#chart-def').node().getBoundingClientRect();
       const selection = d3.select(".chart-def-svg");
-      setSizingRC({width: Math.max(MIN_CHART_WIDTH, bounds.width * 0.8), height: Math.max(MIN_CHART_HEIGHT, bounds.height)}, selection, marginRC2)
+      setSizing(
+        {width: Math.max(MIN_CHART_WIDTH, bounds.width * 0.8), height: Math.max(MIN_CHART_HEIGHT, bounds.height)}, 
+        selection, marginRC2, true)
       buildRadarChart2()
     })
   })

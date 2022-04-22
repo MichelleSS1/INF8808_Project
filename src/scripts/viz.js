@@ -312,8 +312,9 @@ export function drawBCDashedLines(seasons, bxScale, height, padding) {
 }
 
 export function drawBCRankingLines(chartData, bxScale, byScale) {
-  d3.select("#bc-center").selectAll(".ranking-line")
-    .data(chartData)
+  d3.selectAll(".series")
+    .selectAll(".ranking-line")
+    .data(d => d)
     .enter()
     .append("path")
     .attr('class', 'ranking-line')
@@ -324,3 +325,4 @@ export function drawBCRankingLines(chartData, bxScale, byScale) {
         return d3.line()([[bxScale(i), byScale(d.rank)], [bxScale(i + 1), byScale(d.next.rank)]]);
     });
 }
+
