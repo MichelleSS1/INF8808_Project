@@ -76,6 +76,7 @@ button:hover, button:active {
 
 .graph {
     width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -108,8 +109,20 @@ button:hover, button:active {
     background-position: center;
 }
 
-.background-black {
+.background-off {
     background: linear-gradient(to left, rgba(0,0,0,0) 80%, black), url("./background-image-3.jpg");
+    width: 60%;
+    background-position: center;
+}
+
+.background-def {
+    background: linear-gradient(to right, rgba(0,0,0,0) 80%, black), url("./background-image-4.jpg");
+    width: 60%;
+    background-position: center;
+}
+
+.background-masse-salariale {
+    background: linear-gradient(to right, rgba(0,0,0,0) 80%, black), url("./backgroud-image-5.jpg");
     width: 60%;
     background-position: center;
 }
