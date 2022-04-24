@@ -8,7 +8,7 @@
  */
  export function range (start, stop) {
     const res = []
-    for (var i = start; i <= stop; i++) {
+    for (var i = start; i < stop; i++) {
       res.push(i)
     }
     return res
