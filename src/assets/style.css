@@ -95,9 +95,21 @@ button:hover, button:active {
     padding: 5em;
     background: rgba(235,235,235,1);
 }
+#intro-text-2 {
+    width: 40%;
+    padding: 5em;
+    background: black;
+    color: rgba(235,235,235,1);
+}
 
 .background {
     background: linear-gradient(to right, rgba(0,0,0,0) 80%,rgba(235,235,235,1)), url("./background-image-2.jpg");
+    width: 60%;
+    background-position: center;
+}
+
+.background-black {
+    background: linear-gradient(to left, rgba(0,0,0,0) 80%, black), url("./background-image-3.jpg");
     width: 60%;
     background-position: center;
 }
