@@ -19,9 +19,9 @@ header {
 main {
     height: 100%;
     overflow-y: scroll;
-    scroll-snap-type: proximity;
+    scroll-snap-type: mandatory;
     scroll-snap-points-y: repeat(3rem);
-    scroll-snap-type: y proximity;
+    scroll-snap-type: y mandatory;
 }
 
 h1 {
@@ -75,7 +75,6 @@ button:hover, button:active {
 }
 
 .graph {
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -102,6 +101,13 @@ button:hover, button:active {
     color: rgba(235,235,235,1);
 }
 
+#intro-text-4 {
+    width: 40%;
+    padding: 5em;
+    background: black;
+    color: rgba(235,235,235,1);
+}
+
 .background {
     background: linear-gradient(to right, rgba(0,0,0,0) 80%,rgba(235,235,235,1)), url("./background-image-2.jpg");
     width: 60%;
@@ -110,6 +116,12 @@ button:hover, button:active {
 
 .background-black {
     background: linear-gradient(to left, rgba(0,0,0,0) 80%, black), url("./background-image-3.jpg");
+    width: 60%;
+    background-position: center;
+}
+
+#background-6 {
+    background: linear-gradient(to left, rgba(0,0,0,0) 80%, black), url("./background-image-6.jpg");
     width: 60%;
     background-position: center;
 }
@@ -172,4 +184,10 @@ button:hover, button:active {
 
 .third-rank {
     color: brown;
+}
+
+#chart-rank {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
