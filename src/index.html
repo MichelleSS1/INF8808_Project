@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="Description" content="Code pour le Projet de INF8808.">
-        <title>Projet_ | INF8808</title>
+        <title>Projet | INF8808</title>
 
         <link rel="stylesheet" href="assets/style.css">
         <link rel="stylesheet" href="assets/tooltip.css">
@@ -13,79 +13,154 @@
       </head>
 
       <body>
-        <header>
-          <h1>
-            Analyse de la Juventus lors des trois dernières saisons
-          </h1>
-          <div>Texte introductif</div>
-        </header>
+
         <main>
-          <div class="viz-container">
-            <h2>
-              Analyse offensive
-            </h2>
+
+          <div class="page" id="home">
+            <div class="home-title">
+              <h1>
+                Analyse de la Juventus lors des trois dernières saisons
+              </h1>
+            </div>
+          </div>
+
+          <!-- INTRO -->
+          <div class="page" id="intro">
+            <div class="background"></div>
+            <div id="intro-text">
+              La Juventus est un club de soccer professionnel italien évoluant en série A. 
+              C'est l'équipe la plus titrée d'Italie et l'une des plus titrées au monde. La 
+              série A quant à elle est le championnat d'Italie de soccer regroupant les vingt 
+              meilleures équipes italiennes, il s'agit du plus grand championnat d'Italie et 
+              il est d'ailleurs l'un des plus regardés au monde. <br> <br>
+
+              On s’est intéressé aux trois dernières saisons de l’équipe. Plus précisément,
+              on a voulu savoir quelle a été la meilleure saison de Juventus durant les trois
+              dernières années. Nous avons donc comparé la saison 2021 en série A de l’équipe
+              Juventus, menée par l'entraîneur Andrea Pirlo, avec les saisons 2020 et 2022
+              de cette même équipe à l’aide de visualisations de données. À travers celles-ci,
+              nous pourrons analyser la performance de l’équipe et des joueurs lors des 
+              trois dernières saisons de la Série A. <br> <br>
+
+              Nous analyserons d’abord les statistiques offensives et défensives de l’équipe
+              pour chacune des saisons. Ensuite, nous évaluerons la corrélation entre la
+              performance d’une partie et la masse salariale des joueurs. Finalement, nous
+              regarderons l’évolution du classement des sept premières équipes au fil des
+              saisons.
+            </div>
+          </div>
+
+          <!-- VIZ 1 -->
+          <div class="page" id="intro">
+            <div id="intro-text-2">
+              <h2>
+                Analyse offensive
+              </h2>
+              Évaluer une équipe selon ses statistiques offensives peut donner une première 
+              idée de la performance de celle-ci. C’est ce que ces trois visualisations de 
+              données nous apportent. Sept statistiques ont été sélectionnées pour dresser 
+              un portrait sur la performance offensive de l’équipe. Il est possible de voir 
+              la description de la statistique en question en passant la souris dessus. Les 
+              statistiques moyennes des sept premières équipes de la saison sont aussi 
+              disponibles comme référence. Ainsi, il est possible de comparer chacune des 
+              statistiques avec la moyenne pour donner une idée de où se situe l’équipe.
+            </div>
+            <div class="background-off"></div>
+          </div>
+
+          <div class="page">
             <div class="graph radarchart" id="chart-off">
               <svg class="chart-off-svg"></svg>
             </div>
-            <div>
-              Voici un bilan de la saison où Andrea Pirlo a été entraîneur de la Juventus (2020 - 2021), comparativement à la saison précédente (2019 - 2020) et à la saison actuelle (2021 - 2022).
-              <ul>
-                <li><span class="first-rank">1er rang</span> dans la catégorie de buts par match (<b>Gls/90</b>).</li>
-                <li><span class="second-rank">2e rang</span> dans la catégorie de nombre de points par match (<b>Pts/90</b>).</li>
-                <li><span class="second-rank">2e rang</span> dans la catégorie de pourcentage de passes complétées (<b>Cmp%</b>).</li>
-                <li><span class="second-rank">2e rang</span> dans la catégorie de pourcentage de passes reçues (<b>Rec%</b>).</li>
-                <li><span class="first-rank">1er rang</span> dans la catégorie de pourcentage de dribbles complétés (<b>Drib%</b>).</li>
-                <li><span class="first-rank">1er rang</span> dans la catégorie de pourcentage de tirs cadrés (<b>SoT%</b>).</li>
-                <li><span class="first-rank">1er rang</span> dans la catégorie de nombre de buts expectés par match (<b>xG/90</b>).</li>
-              </ul>
+          </div>
+
+          <!-- VIZ 2 -->
+          <div class="page" id="intro">
+            <div class="background-def"></div>
+            <div id="intro-text-2">
+              <h2>
+                Analyse défensive
+              </h2>
+              Les trois prochaines visualisations de données portent sur les statistiques défensives 
+              de Juventus lors des trois dernières saisons. Tout comme dans la section précédente, 
+              ept statistiques ont été sélectionnées pour dresser un portrait sur la performance 
+              défensive de l’équipe. Il est possible de voir la description de la statistique en 
+              question en passant la souris dessus. Les statistiques moyennes des sept premières 
+              équipes de la saison sont aussi disponibles comme référence. Ainsi, il est possible de 
+              comparer chacune des statistiques avec la moyenne pour donner une idée de où se situe 
+              l’équipe.
             </div>
           </div>
 
-          <div class="viz-container">
-            <h2>
-              Analyse défensive
-            </h2>
+          <div class="page">
             <div class="graph radarchart" id="chart-def">
               <svg class="chart-def-svg"></svg>
             </div>
-            <div>
-              Voici le bilan pour les statistiques défensives comparativement aux saisons avant et après.
-              <ul>
-                <li><span class="second-rank">2e rang</span> dans la catégorie de nombre de buts accordés expectés (<b>xGA</b>).</li>
-                <li><span class="second-rank">2e rang</span> dans la catégorie de nombre d'interceptions par match (<b>Int90</b>).</li>
-                <li><span class="second-rank">2e rang</span> dans la catégorie de pourcentage de <i>tackles</i> réussis (<b>Tkl%</b>).</li>
-                <li><span class="third-rank">3e rang</span> dans la catégorie de pourcentage de mises en pression réussies (<b>Press%</b>).</li>
-                <li><span class="second-rank">2e rang</span> dans la catégorie de pourcentage de matchs blancs (<b>CS%</b>).</li>
-                <li><span class="second-rank">2e rang</span> dans la catégorie de pourcentage d'arrêts (<b>Save%</b>).</li>
-                <li><span class="second-rank">2e rang</span> dans la catégorie de nombre de buts par match (<b>GA90</b>).</li>
-              </ul>
+          </div>
+
+          <!-- VIZ 3 -->
+          <div class="page" id="intro">
+            <div id="intro-text-2">
+              <h2>
+                Masses salariales vs résultats de chaque match
+              </h2>
+              La performance globale d’une équipe est aussi influencée par des données effectives.
+              Ces trois visualisations de données dressent un portrait de la potentielle relation entre
+              la masse salariale moyenne des joueurs selon leur temps de jeu pour une partie et la performance
+              de cette même partie. Ainsi, il est possible d’évaluer la corrélation entre la performance
+              d’une partie et la masse salariale des joueurs y participant. Cette visualisation permet
+              donc d’observer les points extrêmes des trois saisons afin de déterminer si la masse
+              salariale moyenne des joueurs pour une partie influence positivement ou négativement
+              la performance de l’équipe, et donc, la performance globale de chacune des saisons.
+            </div>
+            <div class="background-masse-salariale"></div>
+          </div>
+
+          <div class="page" id="scatter">
+            <div class="viz-container">
+              
+              <div class='graph scatterplot' id="chart-eff">
+                <svg id='chart-eff-svg1'>
+                </svg>
+                <svg id='chart-eff-svg2'>
+                </svg>
+                <svg id='chart-eff-svg3'>
+                </svg>
+              </div>
             </div>
           </div>
 
-          <div class="viz-container">
-            <h2>
-              Masses salariales vs résultats de chaque match
-            </h2>
-            <div class='graph scatterplot' id="chart-eff">
-              <svg id='chart-eff-svg1'>
-              </svg>
-              <svg id='chart-eff-svg2'>
-              </svg>
-              <svg id='chart-eff-svg3'>
-              </svg>
+          <!-- VIZ 4 -->
+          <div class="page" id="intro">
+            <div id="intro-text-5">
+              <h2>
+                Classement dans la série A
+              </h2>
+              Les valeurs des statistiques offensives et défensives peuvent suggérer une hausse ou
+              une baisse de la performance selon qu’elles augmentent ou baissent par rapport aux 
+              saisons précédentes. Cependant, malgré la croissance ou la décroissance des statistiques, 
+              on pourrait considérer que la performance globale de la Juventus a été constante si elle 
+              a su maintenir son rang dans le classement de la série A. Pour l’expliquer de manière plus 
+              claire, des statistiques en baisse ne veulent pas forcément dire que l’équipe a été moins 
+              performante, cela peut plutôt vouloir dire que l’environnement a été plus compétitif. 
+              Ainsi, la visualisation ci-dessous représente les données de classement de certaines 
+              équipes de la série A (dont la Juventus) et leur évolution au fil des saisons. Il se lit 
+              et s’interprète aisément en suivant les lignes qui indiquent l’évolution d’une équipe.
+               Il faut noter que le classement pour la saison 2021-2022 date de mars 2022. <br> <br>
+               [Tip pour la visualisation : Passer la souris sur un rang permet d'avoir le nombre de points.]
             </div>
+            <div id="background-6"></div>
           </div>
 
-          <div class="viz-container">
-            <h2>
-              Classsement dans la série A
-            </h2>
-            <div class="graph bumpchart" id="chart-rank">
+
+          <div class="page" id="chart-rank">
+            <div class="graph bumpchart">
               <svg class="chart-rank-svg"></svg>
             </div>
           </div>
           
         </main>
+
         <script src="https://d3js.org/d3.v5.js"></script>
         <script type="module" src="index.js"></script>
       </body>

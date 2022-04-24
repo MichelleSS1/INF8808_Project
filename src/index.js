@@ -20,10 +20,13 @@ import d3Tip from 'd3-tip'
   let svgSize
   let graphSize
 
-  const MIN_RC_HEIGHT = 450
-  const MIN_RC_WIDTH = 800
+  const MIN_RC_HEIGHT = 550
+  const MIN_RC_WIDTH = 1000
 
-  const MIN_SP_HEIGHT =400
+  const MAX_RC_HEIGHT = 650
+  const MAX_RC_WIDTH = 1500
+
+  const MIN_SP_HEIGHT = 400
   const MIN_SP_WIDTH = 481
 
   /**
@@ -58,9 +61,15 @@ import d3Tip from 'd3-tip'
     
     const bounds = d3.select('#chart-off').node().getBoundingClientRect();
     const selection = d3.select(".chart-off-svg");
+
+    var vizWidth = bounds.width > MAX_RC_WIDTH ? MAX_RC_WIDTH : bounds.width
+    vizWidth = bounds.width < MIN_RC_WIDTH ? MIN_RC_WIDTH : vizWidth
+
+    var vizHeight = bounds.height > MAX_RC_HEIGHT ? MAX_RC_HEIGHT : bounds.height
+    vizHeight = bounds.height < MIN_RC_HEIGHT ? MIN_RC_HEIGHT : vizHeight
     
     setSizing(
-      {width: Math.max(MIN_RC_WIDTH, bounds.width * 0.8), height: Math.max(MIN_RC_HEIGHT, bounds.height)}, 
+      { width: vizWidth, height: vizHeight }, 
       selection, marginRC1, true)
     buildRadarChart1()
 
@@ -94,8 +103,14 @@ import d3Tip from 'd3-tip'
     const bounds = d3.select('#chart-def').node().getBoundingClientRect();
     const selection = d3.select(".chart-def-svg");
 
+    var vizWidth = bounds.width > MAX_RC_WIDTH ? MAX_RC_WIDTH : bounds.width
+    vizWidth = bounds.width < MIN_RC_WIDTH ? MIN_RC_WIDTH : vizWidth
+
+    var vizHeight = bounds.height > MAX_RC_HEIGHT ? MAX_RC_HEIGHT : bounds.height
+    vizHeight = bounds.height < MIN_RC_HEIGHT ? MIN_RC_HEIGHT : vizHeight
+
     setSizing(
-      {width: Math.max(MIN_RC_WIDTH, bounds.width * 0.8), height: Math.max(MIN_RC_HEIGHT, bounds.height)}, 
+      {width: vizWidth, height: vizHeight}, 
       selection, marginRC2, true)
     buildRadarChart2()
 

@@ -152,13 +152,13 @@ export function appendSPAxes3 (g) {
  */
 export function appendSPGraphLabels (g, width) {
   g.append('text')
-    .text('Masse salariale (millions deuros)')
+    .text("Masse salariale (millions d'euros)")
     .attr('class', 'y axis-text')
     .attr('transform', 'translate(' + 0 + ',' + -15 + ')')
     .attr('font-size', 12)
     
   g.append('text')
-    .text('id de matchs')
+    .text('Numéro de match')
     .attr('class', 'x axis-text')
     .attr('font-size', 12)
 }

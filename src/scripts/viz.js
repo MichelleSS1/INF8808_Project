@@ -2,6 +2,15 @@ import * as radarChart from './radar_chart'
 import * as preproc from './preprocess.js'
 import { range } from "./util";
 
+/*********************************** CONSTANTS USED FOR STYLE **********************************/
+const JUVENTUS_COLOR = 'blue'
+const TOP_7_COLOR = 'orange'
+const BUTTON_JUVENTUS_WIDTH = 125
+const BUTTON_TOP_7_WIDTH = 100
+const BUTTON_HEIGHT = 25
+const BUTTON_BACKGROUND_COLOR = 'grey'
+const LOW_OPACITY = 0.15
+
 
 /************************************** V1/2 - RADAR CHART *************************************/
 
@@ -55,11 +64,11 @@ export function drawOffensiveRadarCharts(data, element, width, height, margin, t
             radarChart.drawTicks(steps, mins, scales, chartContainer, xCenter, yCenter)
             radarChart.drawSteps(steps, mins, scales, chartContainer, xCenter, yCenter)
             radarChart.drawTitle(serie, chartContainer, xCenter)
-            radarChart.drawPoints(serie, chartContainer, xCenter, yCenter, scales, 'blue')
-            radarChart.drawShape(serie, chartContainer, xCenter, yCenter, scales, 'blue')
+            radarChart.drawPoints(serie, chartContainer, xCenter, yCenter, scales, JUVENTUS_COLOR)
+            radarChart.drawShape(serie, chartContainer, xCenter, yCenter, scales, JUVENTUS_COLOR)
         } else {
-            radarChart.drawPoints(serie, chartContainer, xCenter, yCenter, scales, 'orange')
-            radarChart.drawShape(serie, chartContainer, xCenter, yCenter, scales, 'orange')
+            radarChart.drawPoints(serie, chartContainer, xCenter, yCenter, scales, TOP_7_COLOR)
+            radarChart.drawShape(serie, chartContainer, xCenter, yCenter, scales, TOP_7_COLOR)
         }
     });
 }
@@ -115,11 +124,11 @@ export function drawDefensiveRadarChart(data, element, width, height, margin, ti
             radarChart.drawTicks(steps, mins, scales, chartContainer, xCenter, yCenter)
             radarChart.drawSteps(steps, mins, scales, chartContainer, xCenter, yCenter)
             radarChart.drawTitle(serie, chartContainer, xCenter)
-            radarChart.drawPoints(serie, chartContainer, xCenter, yCenter, scales, 'blue')
-            radarChart.drawShape(serie, chartContainer, xCenter, yCenter, scales, 'blue')
+            radarChart.drawPoints(serie, chartContainer, xCenter, yCenter, scales, JUVENTUS_COLOR)
+            radarChart.drawShape(serie, chartContainer, xCenter, yCenter, scales, JUVENTUS_COLOR)
         } else {
-            radarChart.drawPoints(serie, chartContainer, xCenter, yCenter, scales, 'orange')
-            radarChart.drawShape(serie, chartContainer, xCenter, yCenter, scales, 'orange')
+            radarChart.drawPoints(serie, chartContainer, xCenter, yCenter, scales, TOP_7_COLOR)
+            radarChart.drawShape(serie, chartContainer, xCenter, yCenter, scales, TOP_7_COLOR)
         }
     });
 }
@@ -134,10 +143,10 @@ export function addButtons(svgElement, graphHeight, margin) {
     // Create button for the Juventus radar chart
     var rectBlue = svgElement.append('g')
     rectBlue.append('rect')
-    .attr('width', 125)
-    .attr('height', 25)
+    .attr('width', BUTTON_JUVENTUS_WIDTH)
+    .attr('height', BUTTON_HEIGHT)
     .attr('transform', 'translate(0, ' + (graphHeight + margin.bottom) + ')')
-    .attr('fill', 'grey')
+    .attr('fill', BUTTON_BACKGROUND_COLOR)
     .attr('stroke', 'black')
     .attr('strke-width', '1px')
     .style('cursor', 'pointer')
@@ -146,13 +155,13 @@ export function addButtons(svgElement, graphHeight, margin) {
     .text('Toggle Juventus')
     .attr('transform', 'translate(0,' + (graphHeight + margin.bottom + 20) + ')')
     .on('click', function() {
-      if(svgElement.selectAll('#blue').style('opacity') == 0.15) {
+      if(svgElement.selectAll('#blue').style('opacity') == LOW_OPACITY) {
         svgElement.selectAll('#blue')
         .style('opacity', 1);
         toggled = false;
       }else if(!toggled) {
         svgElement.selectAll('#blue')
-        .style('opacity', 0.15);
+        .style('opacity', LOW_OPACITY);
         toggled = true;
       }
 
@@ -162,8 +171,8 @@ export function addButtons(svgElement, graphHeight, margin) {
     // Create button for the Top 7 radar chart
     var rectOrange = svgElement.append('g')
     rectOrange.append('rect')
-    .attr('width', 100)
-    .attr('height', 25)
+    .attr('width', BUTTON_TOP_7_WIDTH)
+    .attr('height', BUTTON_HEIGHT)
     .attr('transform', 'translate(135,' + (graphHeight + margin.bottom) + ')')
     .attr('fill', 'grey')
     .attr('stroke', 'black')
@@ -174,13 +183,13 @@ export function addButtons(svgElement, graphHeight, margin) {
     .text('Toggle Top 7')
     .attr('transform', 'translate(135,' + (graphHeight + margin.bottom + 20) + ')')
     .on('click', function() {
-      if(svgElement.selectAll('#orange').style('opacity') == 0.15) {
+      if(svgElement.selectAll('#orange').style('opacity') == LOW_OPACITY) {
         svgElement.selectAll('#orange')
         .style('opacity', 1);
         toggled = false;
       }else if(!toggled) {
         svgElement.selectAll('#orange')
-        .style('opacity', 0.15);
+        .style('opacity', LOW_OPACITY);
         toggled = true;
       }
 
