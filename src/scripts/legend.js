@@ -52,5 +52,5 @@ export function drawRCLegend (colorScale, g, height, margin) {
   g.select('.legendOrdinal')
     .select('text.legend-title')
     .attr('transform', 'translate(0, -20)')
-    .text('Legend')
+    .text('Légende')
 }
