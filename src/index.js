@@ -21,10 +21,10 @@ import d3Tip from 'd3-tip'
   let graphSize
 
   const MIN_RC_HEIGHT = 550
-  const MIN_RC_WIDTH = 800
+  const MIN_RC_WIDTH = 1000
 
   const MAX_RC_HEIGHT = 650
-  const MAX_RC_WIDTH = 1200
+  const MAX_RC_WIDTH = 1500
 
   const MIN_SP_HEIGHT = 400
   const MIN_SP_WIDTH = 481
