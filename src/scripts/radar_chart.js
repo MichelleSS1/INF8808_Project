@@ -1,13 +1,15 @@
 // Constants used for style.
 const TOTAL_HEADERS_COUNT = 2
-const POINT_RADIUS = 3
+const POINT_SMALL_RADIUS = 3
+const POINT_LARGE_RADIUS = 5
 const N_STEPS = 4
 const TITLE_VERTICAL_MARGIN = 35
 const TITLE_FONT_SIZE = 17
 const STEP_OPACITY = 0.5
 const STEP_FONT_SIZE = 10
 const LABELS_FONT_SIZE = 13
-const SHAPE_STROKE_WIDTH = 2
+const SHAPE_SMALL_STROKE_WIDTH = 2
+const SHAPE_LARGE_STROKE_WIDTH = 3
 const AXE_STROKE_WIDTH = .5
 const TICK_STROKE_WIDTH = .3
 const LABELS_MULTIPLIER_FACTOR = 1.05
@@ -178,8 +180,14 @@ export function drawPoints(data, element, xCenter, yCenter, scales, colour) {
         .append('circle')
         .attr('cx', function(d) { return d.x })
         .attr('cy', function(d) { return d.y })
-        .attr('r', POINT_RADIUS)
+        .attr('r', POINT_SMALL_RADIUS)
         .attr('fill', colour)
+        .on("mouseover", function(d) { 
+            d3.select(this).style('r', POINT_LARGE_RADIUS + 'px')
+         })
+        .on("mouseout", function() {
+            d3.select(this).style('r', POINT_SMALL_RADIUS + 'px')
+        })
 }       
 
 
@@ -329,8 +337,14 @@ export function drawShape(data, element, xCenter, yCenter, scales, colour) {
         .append('polygon')
         .attr('points', strPolygon)
         .attr('fill', 'transparent')
-        .attr('stroke-width', SHAPE_STROKE_WIDTH + 'px')
+        .attr('stroke-width', SHAPE_SMALL_STROKE_WIDTH + 'px')
         .attr('stroke', colour)
+        .on("mouseover", function() { 
+            d3.select(this).style('stroke-width', SHAPE_LARGE_STROKE_WIDTH + 'px')
+         })
+        .on("mouseout", function() {
+            d3.select(this).style('stroke-width', SHAPE_SMALL_STROKE_WIDTH + 'px')
+        })
 }
 
 
@@ -382,9 +396,10 @@ export function getCoordinates(stats, scales, xCenter, yCenter) {
     var totalAxes = keys.length
 
     keys.forEach(function(d, i) {
+        var val = stats[d]
         var x = xCenter * (1 - scales[d](stats[d]) * Math.sin(i * 2 * Math.PI / totalAxes))
         var y = yCenter * (1 - scales[d](stats[d]) * Math.cos(i * 2 * Math.PI / totalAxes))
-        points.push({'x': x, 'y': y})
+        points.push({'val': val, 'x': x, 'y': y})
     })
 
     return points

@@ -19,9 +19,9 @@ header {
 main {
     height: 100%;
     overflow-y: scroll;
-    scroll-snap-type: proximity;
+    scroll-snap-type: mandatory;
     scroll-snap-points-y: repeat(3rem);
-    scroll-snap-type: y proximity;
+    scroll-snap-type: y mandatory;
 }
 
 h1 {
@@ -33,7 +33,7 @@ h1 {
 }
 
 h2 {
-    color: #2A2B2E;
+    color: #979696;
     font-family: 'Roboto Slab', 'serif';
     font-weight: normal;
 }
@@ -103,6 +103,13 @@ button:hover, button:active {
     color: rgba(235,235,235,1);
 }
 
+#intro-text-5 {
+    width: 40%;
+    padding: 5em;
+    background: black;
+    color: rgba(235,235,235,1);
+}
+
 .background {
     background: linear-gradient(to right, rgba(0,0,0,0) 80%,rgba(235,235,235,1)), url("./background-image-2.jpg");
     width: 60%;
@@ -122,7 +129,13 @@ button:hover, button:active {
 }
 
 .background-masse-salariale {
-    background: linear-gradient(to right, rgba(0,0,0,0) 80%, black), url("./backgroud-image-5.jpg");
+    background: linear-gradient(to left, rgba(0,0,0,0) 80%, black), url("./background-image-5.jpg");
+    width: 60%;
+    background-position: center;
+}
+
+#background-6 {
+    background: linear-gradient(to left, rgba(0,0,0,0) 80%, black), url("./background-image-6.jpg");
     width: 60%;
     background-position: center;
 }
@@ -185,4 +198,16 @@ button:hover, button:active {
 
 .third-rank {
     color: brown;
+}
+
+#chart-rank {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#scatter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
