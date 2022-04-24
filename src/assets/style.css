@@ -87,9 +87,19 @@ button:hover, button:active {
 }
 
 #intro {
-    background-size: cover;
-    background-image: url("./background-image-2.jpg"); /* fallback */
-    background-image: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.7) 100%), url("./background-image-2.jpg");
+    display: flex;
+}
+
+#intro-text {
+    width: 40%;
+    padding: 5em;
+    background: rgba(235,235,235,1);
+}
+
+.background {
+    background: linear-gradient(to right, rgba(0,0,0,0) 80%,rgba(235,235,235,1)), url("./background-image-2.jpg");
+    width: 60%;
+    background-position: center;
 }
 
 .home-title {
